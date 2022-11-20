@@ -1,30 +1,9 @@
 #include "midi_device.hpp"
-#include "rtmidi_ports.hpp"
 #include <stdexcept>
 #include <spdlog/spdlog.h>
 
 namespace midikeys
 {
-    midi_port::midi_port(const size_t port_number)
-        : m_port_number(port_number)
-    {
-    }
-
-    size_t midi_port::port_number() const
-    {
-        return m_port_number;
-    }
-
-    midi_input::midi_input(const size_t port_number)
-        : midi_port(port_number)
-    {
-    }
-
-    midi_output::midi_output(const size_t port_number)
-        : midi_port(port_number)
-    {
-    }
-
     midi_device::midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output, std::unique_ptr<midi_listener> listener)
         : m_input(std::move(input)),
         m_output(std::move(output)),

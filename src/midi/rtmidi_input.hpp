@@ -1,7 +1,7 @@
 #pragma once
 
 #include <RtMidi.h>
-#include "midi_device.hpp"
+#include "midi_input.hpp"
 
 namespace midikeys
 {
@@ -16,21 +16,6 @@ namespace midikeys
         void close() override;
 
         void get_message(midi_message& message) const override;
-
-        std::string port_name() const override;
-    };
-
-    class rtmidi_output : public midi_output
-    {
-        mutable RtMidiOut m_out;
-    public:
-        explicit rtmidi_output(const size_t port_number);
-
-        bool open() override;
-
-        void close() override;
-
-        void send_message(const midi_message& message) const override;
 
         std::string port_name() const override;
     };

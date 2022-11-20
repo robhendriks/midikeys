@@ -1,10 +1,10 @@
 #include <spdlog/spdlog.h>
 #include <iostream>
-#include "input_manager.hpp"
-#include "input_factory.hpp"
-#include "midi_factory.hpp"
-#include "midi_listener.hpp"
-#include "midi_device.hpp"
+#include "io/input_manager.hpp"
+#include "io/input_factory.hpp"
+#include "midi/midi_factory.hpp"
+#include "midi/midi_listener.hpp"
+#include "midi/midi_device.hpp"
 
 class input_listener : public midikeys::midi_listener
 {
