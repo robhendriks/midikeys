@@ -13,3 +13,9 @@ Utility that simulates keyboard input based on MIDI messages.
 | Manufacturer | Device | Support |
 | --- | --- | --- |
 | Novation | Launchpad X | 🟢 Full |
+
+## Usage
+
+```psh
+midikeys <port_in> <port_out>
+```
