@@ -1,6 +1,6 @@
 #include "device_inquiry.hpp"
 #include "select_layout.hpp"
-#include "message_dump.hpp"
+#include "forward_input.hpp"
 #include <spdlog/spdlog.h>
 
 namespace midikeys::states
@@ -12,6 +12,10 @@ namespace midikeys::states
 
     void device_inquiry::enter(const midikeys::midi_device& device)
     {
+        // Set fixed velocity curve
+        device.output().send_message({ 240, 0, 32, 41, 2, 12, 4, 3, 127, 247 });
+
+        // Send inquiry
         device.output().send_message({ 240, 126, 127, 6, 1, 247 });
     }
 
@@ -22,7 +26,7 @@ namespace midikeys::states
                 size_t build_number = message.at(12) * 1000 + message.at(13) * 100 + message.at(14) * 10 + message.at(15);
                 spdlog::info("Novation Launchpad X, firmware build {}", build_number);
 
-                machine().set_state<select_layout>(device, 1, std::make_unique<message_dump>());
+                machine().set_state<select_layout>(device, 1, std::make_unique<forward_input>());
             }
         }
     }

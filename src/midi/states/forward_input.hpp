@@ -1,13 +1,15 @@
 #pragma once
 
 #include "../midi_state.hpp"
+#include "../midi_input_bridge.hpp"
 
 namespace midikeys::states
 {
-    class message_dump : public midikeys::midi_state
+    class forward_input : public midikeys::midi_state
     {
+        midi_input_bridge m_bridge;
     public:
-        message_dump();
+        forward_input();
 
         void enter(const midikeys::midi_device& device) override;
 

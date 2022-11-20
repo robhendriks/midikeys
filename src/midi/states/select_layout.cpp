@@ -11,7 +11,7 @@ namespace midikeys::states
 
     void select_layout::enter(const midikeys::midi_device& device)
     {
-        midikeys::midi_message message{ 240, 0, 32, 41, 2, 12, 14, 1, 247 };
+        midikeys::midi_message message{ 240, 0, 32, 41, 2, 12, 14, m_layout_id, 247 };
         device.output().send_message(message);
 
         machine().set_state(device, std::move(m_next_state));
