@@ -23,6 +23,17 @@ namespace midikeys
         static midi_message note_off(const uint8_t channel, const uint8_t note, const uint8_t velocity);
         static midi_message note_on(const uint8_t channel, const uint8_t note, const uint8_t velocity);
 
+        bool is_empty() const;
+        bool starts_with(const uint8_t byte) const;
+        bool starts_with_sequence(std::initializer_list<const uint8_t> expected_bytes) const;
+        bool ends_with(const uint8_t byte) const;
+        bool has_size(const size_t size) const;
+        int compare_byte(const size_t index, const uint8_t byte) const;
+
+        uint8_t at(const size_t index) const;
+        uint8_t first() const;
+        uint8_t last() const;
+
         std::vector<uint8_t>& bytes();
         const std::vector<uint8_t>& bytes() const;
 

@@ -4,6 +4,7 @@
 #include "midi_listener.hpp"
 #include "midi_input.hpp"
 #include "midi_output.hpp"
+#include <memory>
 
 namespace midikeys
 {
@@ -16,7 +17,7 @@ namespace midikeys
     public:
         midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output, std::unique_ptr<midi_listener> listener);
 
-        midi_worker open();
+        std::shared_ptr<midi_worker> open();
         void close();
 
         midi_input& input();

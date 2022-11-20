@@ -1,4 +1,5 @@
 #include "rtmidi_output.hpp"
+#include <spdlog/spdlog.h>
 
 namespace midikeys
 {

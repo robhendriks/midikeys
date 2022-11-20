@@ -12,6 +12,6 @@ namespace midikeys
     public:
         virtual void handle_open(const midi_device& device) = 0;
         virtual void handle_close(const midi_device& device) = 0;
-        virtual void handle_message(const midi_message& message) = 0;
+        virtual void handle_message(const midikeys::midi_device& device, const midi_message& message) = 0;
     };
 }

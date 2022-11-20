@@ -1,5 +1,6 @@
 #include "midi_message.hpp"
 #include "midi_util.hpp"
+#include <algorithm>
 
 namespace midikeys
 {
@@ -32,6 +33,63 @@ namespace midikeys
     midi_message midi_message::note_on(const uint8_t channel, const uint8_t note, const uint8_t velocity)
     {
         return { midi_util::make_command(message_type::NOTE_ON, channel), note, velocity };
+    }
+
+    bool midi_message::is_empty() const
+    {
+        return m_bytes.empty();
+    }
+
+    bool midi_message::starts_with(const uint8_t byte) const
+    {
+        return !is_empty() && first() == byte;
+    }
+
+    bool midi_message::starts_with_sequence(std::initializer_list<const uint8_t> expected_bytes) const
+    {
+        if (expected_bytes.size() > size()) {
+            return false;
+        }
+
+        size_t idx = 0;
+        for (const uint8_t expected_byte : expected_bytes) {
+            if (m_bytes[idx] != expected_byte) {
+                return false;
+            }
+            idx++;
+        }
+
+        return true;
+    }
+
+    bool midi_message::ends_with(const uint8_t byte) const
+    {
+        return !is_empty() && last() == byte;
+    }
+
+    bool midi_message::has_size(const size_t size) const
+    {
+        return m_bytes.size() == size;
+    }
+
+    int midi_message::compare_byte(const size_t index, const uint8_t byte) const
+    {
+        return !is_empty() && at(index) == byte;
+    }
+
+    uint8_t midi_message::at(const size_t index) const
+    {
+        return m_bytes.at(index);
+    }
+
+    uint8_t midi_message::first() const
+    {
+        return m_bytes.front();
+    }
+
+    uint8_t midi_message::last() const
+    {
+        return m_bytes.back();
     }
 
     std::vector<uint8_t>& midi_message::bytes()

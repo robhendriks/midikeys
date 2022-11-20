@@ -10,6 +10,7 @@ namespace midikeys
         : m_device(device), 
         m_thread(std::thread(&midi_worker::do_work, this))
     {
+        spdlog::debug("Created MIDI worker thread");
     }
 
     midi_worker::~midi_worker()
@@ -19,6 +20,8 @@ namespace midikeys
 
     void midi_worker::do_work()
     {
+        spdlog::debug("Started listening to incoming MIDI messages");
+
         m_working = true;
 
         midi_message message;
@@ -27,11 +30,13 @@ namespace midikeys
             m_device.get().input().get_message(message);
 
             if (message.size() > 0) {
-                m_device.get().listener().handle_message(message);
+                m_device.get().listener().handle_message(m_device, message);
             }
 
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
+
+        spdlog::debug("Stopped listening to incoming MIDI messages");
     }
 
     void midi_worker::dispose()
