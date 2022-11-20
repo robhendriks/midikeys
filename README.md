@@ -2,7 +2,7 @@
 
 Utility that simulates keyboard input based on MIDI messages.
 
-!(Screenshot)[docs/images/screenshot.jpg]
+![Screenshot](docs/images/screenshot.jpg)
 
 ## Platforms
 
