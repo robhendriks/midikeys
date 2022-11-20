@@ -8,7 +8,6 @@ namespace midikeys
 {
     class stateful_midi_listener : public midi_listener
     {
-        input_manager& m_input_manager;
         midi_state_machine m_state_machine;
 
     public:

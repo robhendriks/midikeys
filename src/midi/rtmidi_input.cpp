@@ -12,6 +12,11 @@ namespace midikeys
         if (m_in.isPortOpen()) {
             return true;
         }
+        
+        m_in.setErrorCallback([](RtMidiError::Type type, const std::string& errorText, void* userData)
+            {
+                // 
+            });
 
         m_in.ignoreTypes(false, true, true);
         m_in.openPort(port_number());

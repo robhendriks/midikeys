@@ -2,6 +2,7 @@
 
 #include "midi_device.hpp"
 #include "midi_message.hpp"
+#include "../io/input_manager.hpp"
 #include <memory>
 
 namespace midikeys
@@ -10,9 +11,10 @@ namespace midikeys
 
     class midi_state_machine
     {
+        input_manager& m_input;
         std::unique_ptr<midi_state> m_state;
     public:
-        midi_state_machine();
+        midi_state_machine(input_manager& input);
 
         void handle_message(const midi_device& device, const midi_message& message);
 
@@ -23,5 +25,8 @@ namespace midikeys
         {
             set_state(device, std::make_unique<Ty>(std::forward<Args>(args)...));
         }
+
+        input_manager& input();
+        const input_manager& input() const;
     };
 }

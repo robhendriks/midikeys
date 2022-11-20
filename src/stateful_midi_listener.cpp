@@ -5,8 +5,7 @@
 namespace midikeys
 {
     stateful_midi_listener::stateful_midi_listener(input_manager& input_manager)
-        : m_input_manager(input_manager),
-        m_state_machine()
+        : m_state_machine(input_manager)
     {
     }
 

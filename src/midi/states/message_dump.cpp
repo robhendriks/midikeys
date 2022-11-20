@@ -18,11 +18,25 @@ namespace midikeys::states
 
         if (type == message_type::CONTROL_CHANGE)
         {
-            spdlog::info("[CC] channel={}, control={}, value={}", message.channel(), message.at(1), message.at(2));
+            const uint8_t control = message.at(1);
+            const uint8_t value = message.at(2);
+
+            spdlog::info("[CC] channel={}, control={}, value={}", message.channel(), control, value);
         }
-        else
+        if (type == message_type::NOTE_ON) 
         {
-            spdlog::warn("Unknown message type");
+            const uint8_t note = message.at(1);
+            const uint8_t velocity= message.at(2);
+
+            spdlog::info("[NOTE_ON] channel={}, note={}, velocity={}", message.channel(), note, velocity);
+
+            if (note == 11) {
+                machine().input().send_keyboard_event({ keyboard_code::arrow_left });
+            }
+        }
+        else if (type == message_type::NOTE_OFF)
+        {
+            spdlog::info("[NOTE_OFF] channel={}, note={}, velocity={}", message.channel(), message.at(1), message.at(2));
         }
     }
 

@@ -47,7 +47,8 @@ namespace midikeys
             return message_type::CONTROL_CHANGE;
         }
         else if (status_byte == 144) {
-            return message_type::NOTE_ON;
+            const uint8_t velocity = at(2);
+            return velocity > 0 ? message_type::NOTE_ON : message_type::NOTE_OFF;
         }
         else if (status_byte == 128) {
             return message_type::NOTE_OFF;

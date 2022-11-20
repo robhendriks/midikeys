@@ -4,8 +4,8 @@
 
 namespace midikeys
 {
-    midi_state_machine::midi_state_machine()
-        : m_state(nullptr)
+    midi_state_machine::midi_state_machine(input_manager& input)
+        : m_input(input), m_state(nullptr)
     {
     }
 
@@ -35,5 +35,15 @@ namespace midikeys
 
         spdlog::debug("[STATE_ENTER] {}", m_state->name());
         m_state->enter(device);
+    }
+
+    input_manager& midi_state_machine::input()
+    {
+        return m_input;
+    }
+
+    const input_manager& midi_state_machine::input() const
+    {
+        return m_input;
     }
 }

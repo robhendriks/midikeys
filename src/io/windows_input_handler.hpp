@@ -10,5 +10,6 @@ namespace midikeys
 
     public:
         std::string_view platform() const override;
+        void send_keyboard_event(const keyboard_event& event) const override;
     };
 }

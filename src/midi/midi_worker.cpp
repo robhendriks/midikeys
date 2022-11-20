@@ -33,7 +33,7 @@ namespace midikeys
                 m_device.get().listener().handle_message(m_device, message);
             }
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
 
         spdlog::debug("Stopped listening to incoming MIDI messages");
