@@ -6,8 +6,11 @@ namespace midikeys
 {
     enum class message_type
     {
+        NONE = 0x0,
+
         NOTE_OFF = 0x80,
         NOTE_ON = 0x90,
+
         CONTROL_CHANGE = 0xB0,
     };
 
@@ -23,6 +26,8 @@ namespace midikeys
         static midi_message note_off(const uint8_t channel, const uint8_t note, const uint8_t velocity);
         static midi_message note_on(const uint8_t channel, const uint8_t note, const uint8_t velocity);
 
+        message_type type() const;
+        bool is_of_type(const message_type expected_type) const;
         bool is_empty() const;
         bool starts_with(const uint8_t byte) const;
         bool starts_with_sequence(std::initializer_list<const uint8_t> expected_bytes) const;
@@ -30,6 +35,7 @@ namespace midikeys
         bool has_size(const size_t size) const;
         int compare_byte(const size_t index, const uint8_t byte) const;
 
+        uint8_t channel() const;
         uint8_t at(const size_t index) const;
         uint8_t first() const;
         uint8_t last() const;
