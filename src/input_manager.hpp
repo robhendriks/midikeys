@@ -12,5 +12,8 @@ namespace midikeys
         explicit input_manager(std::unique_ptr<input_handler> handler);
 
         void initialize();
+
+        input_handler& handler();
+        const input_handler& handler() const;
     };
 }

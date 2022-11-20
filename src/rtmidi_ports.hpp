@@ -12,8 +12,10 @@ namespace midikeys
         explicit rtmidi_input(const size_t port_number);
 
         bool open() override;
-        
+
         void close() override;
+
+        void get_message(midi_message& message) const override;
 
         std::string port_name() const override;
     };
@@ -25,7 +27,10 @@ namespace midikeys
         explicit rtmidi_output(const size_t port_number);
 
         bool open() override;
+
         void close() override;
+
+        void send_message(const midi_message& message) const override;
 
         std::string port_name() const override;
     };

@@ -1,7 +1,11 @@
 #pragma once
 
+#include "midi_worker.hpp"
+#include "midi_listener.hpp"
+#include "midi_message.hpp"
 #include <RtMidi.h>
 #include <string>
+#include <thread>
 
 namespace midikeys
 {
@@ -22,12 +26,16 @@ namespace midikeys
     {
     public:
         explicit midi_input(const size_t port_number);
+
+        virtual void get_message(midi_message& message) const = 0;
     };
 
     class midi_output : public midi_port
     {
     public:
         explicit midi_output(const size_t port_number);
+
+        virtual void send_message(const midi_message& message) const = 0;
     };
 
     namespace midi_factory
@@ -40,14 +48,18 @@ namespace midikeys
     {
         std::unique_ptr<midi_input> m_input;
         std::unique_ptr<midi_output> m_output;
+        std::unique_ptr<midi_listener> m_listener;
 
     public:
-        midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output);
+        midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output, std::unique_ptr<midi_listener> listener);
 
-        void open();
+        midi_worker open();
         void close();
 
         midi_input& input();
+        const midi_input& input() const;
         midi_output& output();
+        const midi_output& output() const;
+        midi_listener& listener();
     };
 }

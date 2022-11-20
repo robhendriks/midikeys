@@ -12,4 +12,14 @@ namespace midikeys
     {
         spdlog::debug("Using '{}' input handler", m_handler->platform());
     }
+
+    input_handler& input_manager::handler()
+    {
+        return *m_handler;
+    }
+
+    const input_handler& input_manager::handler() const
+    {
+        return *m_handler;
+    }
 }

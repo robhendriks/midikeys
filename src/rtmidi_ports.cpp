@@ -13,7 +13,9 @@ namespace midikeys
             return true;
         }
 
+        m_in.ignoreTypes(false, true, true);
         m_in.openPort(port_number());
+
         return m_in.isPortOpen();
     }
 
@@ -21,6 +23,13 @@ namespace midikeys
     {
         if (m_in.isPortOpen()) {
             m_in.closePort();
+        }
+    }
+
+    void rtmidi_input::get_message(midi_message& message) const
+    {
+        if (m_in.isPortOpen()) {
+            m_in.getMessage(&message.bytes());
         }
     }
 
@@ -41,6 +50,7 @@ namespace midikeys
         }
 
         m_out.openPort(port_number());
+
         return m_out.isPortOpen();
     }
 
@@ -48,6 +58,13 @@ namespace midikeys
     {
         if (m_out.isPortOpen()) {
             m_out.closePort();
+        }
+    }
+
+    void rtmidi_output::send_message(const midi_message& message) const
+    {
+        if (m_out.isPortOpen()) {
+            m_out.sendMessage(&message.bytes());
         }
     }
 
