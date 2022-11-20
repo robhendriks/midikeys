@@ -1,10 +1,13 @@
 #pragma once
 
-#include "midi_state.hpp"
+#include "midi_device.hpp"
+#include "midi_message.hpp"
 #include <memory>
 
 namespace midikeys
 {
+    class midi_state;
+
     class midi_state_machine
     {
         std::unique_ptr<midi_state> m_state;

@@ -1,4 +1,5 @@
 #include "midi_state_machine.hpp"
+#include "midi_state.hpp"
 #include <spdlog/spdlog.h>
 
 namespace midikeys

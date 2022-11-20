@@ -1,5 +1,6 @@
 #pragma once
 
+#include "midi_state_machine.hpp"
 #include "midi_device.hpp"
 #include "midi_message.hpp"
 #include <string>
@@ -7,8 +8,6 @@
 
 namespace midikeys
 {
-    class midi_state_machine;
-
     class midi_state
     {
         friend class midi_state_machine;
