@@ -33,5 +33,11 @@ midikeys --list
 ### Run
 
 ```shell
-midikeys --input=<port> --output=<port>
+midikeys --input=<port> --output=<port> <mapping_file>
+```
+
+**Example**
+
+```shell
+midikeys --input=0 --output=0 "mappings/rekordbox.toml"
 ```

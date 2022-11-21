@@ -63,9 +63,14 @@ namespace midikeys {
             return;
         }
 
+        if (cmdl.pos_args().size() < 2) {
+            spdlog::error("Usage: midikeys [options] <mapping_file>");
+            return;
+        }
+
         input_manager input{
                 input_factory::make_platform_default(),
-                input_mapping::from_toml_file("mappings/rekordbox.toml")
+                input_mapping::from_toml_file(cmdl.pos_args().at(1))
         };
 
         input.initialize();
