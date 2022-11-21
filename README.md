@@ -18,6 +18,20 @@ Utility that simulates keyboard input based on MIDI messages.
 
 ## Usage
 
-```psh
-midikeys <port_in> <port_out>
+**Global Arguments**
+
+| Argument | Alias | Type | Description |
+| :------- | :---- | :--: | :---------- |
+| `--verbose` | `-v` | boolean | Enable extended logging |
+
+### List MIDI ports
+
+```shell
+midikeys --list
+```
+
+### Run
+
+```shell
+midikeys --input=<port> --output=<port>
 ```
