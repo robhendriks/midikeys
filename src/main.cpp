@@ -18,7 +18,8 @@ int main(const int argc, const char* argv[])
 
     try {
         midikeys::input_manager input_manager{
-            midikeys::input_factory::make_platform_default()
+            midikeys::input_factory::make_platform_default(),
+            midikeys::input_mapping::from_toml_file("mappings/rekordbox.toml")
         };
 
         input_manager.initialize();

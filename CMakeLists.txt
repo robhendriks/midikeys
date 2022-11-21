@@ -2,6 +2,11 @@
 
 project(midikeys)
 
+set(BUILD_PROBE OFF CACHE BOOL "Build probe tool?")
+
 add_subdirectory(3rd_party)
 add_subdirectory(src)
-add_subdirectory(probe)
+
+if (BUILD_PROBE)
+    add_subdirectory(probe)
+endif()

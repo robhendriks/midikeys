@@ -5,18 +5,11 @@
 
 namespace midikeys
 {
-    struct note_event
-    {
-        const uint8_t channel;
-        const uint8_t note;
-        const uint8_t velocity;
-    };
-
     struct control_change_event
     {
         const uint8_t channel;
-        const uint8_t note;
-        const uint8_t velocity;
+        const uint8_t control;
+        const uint8_t value;
     };
 
     class midi_input_bridge

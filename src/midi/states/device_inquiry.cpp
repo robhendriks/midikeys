@@ -13,7 +13,7 @@ namespace midikeys::states
     void device_inquiry::enter(const midikeys::midi_device& device)
     {
         // Set fixed velocity curve
-        device.output().send_message({ 240, 0, 32, 41, 2, 12, 4, 3, 127, 247 });
+        device.output().send_message({ 240, 0, 32, 41, 2, 12, 4, 0, 247 });
 
         // Send inquiry
         device.output().send_message({ 240, 126, 127, 6, 1, 247 });
