@@ -1,7 +1,7 @@
 ﻿file(GLOB_RECURSE SOURCES *.cpp)
 file(GLOB_RECURSE HEADERS *.hpp)
 
-add_executable (midikeys ${SOURCES} ${HEADERS})
+add_executable(midikeys ${SOURCES} ${HEADERS})
 
 target_compile_definitions(midikeys PRIVATE USE_RTMIDI_API=1)
 

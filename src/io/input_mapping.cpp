@@ -26,6 +26,8 @@ namespace midikeys
         {
             const toml::array& t_inputs_arr = *t_inputs.as_array();
 
+            spdlog::debug("Loading {} input binding(s)", t_inputs_arr.size());
+
             for (const toml::node& node : t_inputs_arr)
             {
                 if (!node.is_table()) {

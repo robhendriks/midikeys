@@ -8,7 +8,7 @@ namespace midikeys
     class midi_output : public midi_port
     {
     public:
-        explicit midi_output(const size_t port_number);
+        explicit midi_output(midi_port_descriptor descriptor);
 
         virtual void send_message(const midi_message& message) const = 0;
     };

@@ -3,13 +3,11 @@
 #include "midi_port.hpp"
 #include "midi_message.hpp"
 
-namespace midikeys
-{
-    class midi_input : public midi_port
-    {
+namespace midikeys {
+    class midi_input : public midi_port {
     public:
-        explicit midi_input(const size_t port_number);
+        explicit midi_input(midi_port_descriptor descriptor);
 
-        virtual void get_message(midi_message& message) const = 0;
+        virtual void get_message(midi_message &message) const = 0;
     };
 }

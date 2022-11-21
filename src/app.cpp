@@ -1,5 +1,8 @@
 #include "app.hpp"
 #include "midi/midi_api_factory.hpp"
+#include "stateful_midi_listener.hpp"
+#include "io/input_factory.hpp"
+#include "io/input_mapping.hpp"
 #include <spdlog/spdlog.h>
 
 namespace midikeys {
@@ -8,7 +11,9 @@ namespace midikeys {
         return {verbose};
     }
 
-    app::app() noexcept: m_midi_api(nullptr) {}
+    app::app() noexcept
+            : m_midi_api(nullptr),
+              m_midi_device(nullptr) {}
 
     void app::initialize_midi_api() {
         m_midi_api = midi_api_factory::make_platform_default();
@@ -58,11 +63,25 @@ namespace midikeys {
             return;
         }
 
-        spdlog::info("MIDI ports: '{}' '{}'",
-                     input_port_descriptor.value().port_name,
-                     output_port_descriptor.value().port_name);
+        input_manager input{
+                input_factory::make_platform_default(),
+                input_mapping::from_toml_file("mappings/rekordbox.toml")
+        };
 
-        // TODO: implement
+        input.initialize();
+
+        m_midi_device = m_midi_api->make_device(
+                input_port_descriptor.value(),
+                output_port_descriptor.value(),
+                std::make_unique<stateful_midi_listener>(input));
+
+        const auto worker = m_midi_device->open();
+
+        char c;
+        std::cin.get(c);
+
+        worker->dispose();
+        m_midi_device->close();
     }
 
     void app::run_command_list(const argh::parser &) {

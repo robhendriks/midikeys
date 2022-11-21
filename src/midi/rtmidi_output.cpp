@@ -1,15 +1,12 @@
 #include "rtmidi_output.hpp"
 #include <spdlog/spdlog.h>
 
-namespace midikeys
-{
-    rtmidi_output::rtmidi_output(const size_t port_number)
-        : m_out(), midi_output(port_number)
-    {
+namespace midikeys {
+    rtmidi_output::rtmidi_output(midi_port_descriptor descriptor)
+            : m_out(), midi_output(std::move(descriptor)) {
     }
 
-    bool rtmidi_output::open()
-    {
+    bool rtmidi_output::open() {
         if (m_out.isPortOpen()) {
             return true;
         }
@@ -19,22 +16,15 @@ namespace midikeys
         return m_out.isPortOpen();
     }
 
-    void rtmidi_output::close()
-    {
+    void rtmidi_output::close() {
         if (m_out.isPortOpen()) {
             m_out.closePort();
         }
     }
 
-    void rtmidi_output::send_message(const midi_message& message) const
-    {
+    void rtmidi_output::send_message(const midi_message &message) const {
         if (m_out.isPortOpen()) {
             m_out.sendMessage(&message.bytes());
         }
     }
-
-    std::string rtmidi_output::port_name() const
-    {
-        return m_out.getPortName(port_number());
-    };
 }

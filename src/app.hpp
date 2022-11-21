@@ -13,6 +13,7 @@ namespace midikeys {
 
     class app {
         std::unique_ptr<midi_api> m_midi_api;
+        std::unique_ptr<midi_device> m_midi_device;
 
         void run_command_root(const argh::parser &cmdl);
 

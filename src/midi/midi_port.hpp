@@ -9,13 +9,13 @@ namespace midikeys {
     };
 
     class midi_port {
-        const size_t m_port_number;
+        const midi_port_descriptor m_descriptor;
     public:
-        explicit midi_port(const size_t port_number);
+        explicit midi_port(midi_port_descriptor descriptor);
 
-        size_t port_number() const;
+        [[nodiscard]] size_t port_number() const;
 
-        virtual std::string port_name() const = 0;
+        [[nodiscard]] std::string_view port_name() const;
 
         virtual bool open() = 0;
 
