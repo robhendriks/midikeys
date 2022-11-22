@@ -58,22 +58,24 @@ midikeys --input=0 --output=0 rekordbox novation-launchpad-x
 Mappings are defined in `yaml` and allow you to dynamically bind MIDI events to key strokes.
 
 ```yaml
-mappings:
+mapping:
   # MIDI CC 11 to left arrow
-  - channel: 1
-    control: 11
-    key: arrow_left
-    feedback:
-      off: dark_red
-      on: light_red
+  - control_change:
+      channel: 1
+      control: 11
+      key: arrow_left
+      feedback:
+        off: dark_red
+        on: light_red
 
   # MIDI CC 12 to right arrow
-  - channel: 1
-    control: 12
-    key: arrow_right
-    feedback:
-      off: dark_red
-      on: light_red
+  - control_change:
+      channel: 1
+      control: 12
+      key: arrow_right
+      feedback:
+        off: dark_red
+        on: light_red
 ```
 
 ### Color Table
@@ -97,15 +99,17 @@ mappings:
 Devices profiles allow users to add support for a specific MIDI device.
 
 ```yaml
-# Messages sent upon opening or closing the MIDI connection
-messages:
-  open:
-    - [240, 0, 32, 41, 2, 12, 14, 1, 247] # Select programmer layout
-  close:
-    - [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
+profile:
+  # Messages sent upon opening or closing the MIDI connection
+  messages:
+    open:
+      - sysex: [240, 0, 32, 41, 2, 12, 14, 1, 247] # Select progammer layout
+    close:
+      - sysex: [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
 
-# Color -> MIDI CC value mapping
-colors:
-  dark_red: 7
-  light_red: 5
+  # Color -> MIDI CC value mapping
+  colors:
+    dark_red: 7
+    light_red: 5
+
 ```

@@ -3,6 +3,7 @@
 #include "io/input_factory.hpp"
 #include "io/input_mapping.hpp"
 #include "io/input_manager.hpp"
+#include "device/device_profile.hpp"
 #include <spdlog/spdlog.h>
 
 namespace midikeys {
@@ -130,6 +131,13 @@ namespace midikeys {
         if (!fs::is_regular_file(profile_path)) {
             spdlog::error("Profile not found: {}", profile_path.string());
             return;
+        }
+
+        try {
+            const auto profile = device_profile::from_yaml_file(profile_path);
+        }
+        catch (const std::exception& e) {
+            spdlog::error("Profile contains error(s): {}", e.what());
         }
     }
 
