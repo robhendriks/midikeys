@@ -1,4 +1,4 @@
-﻿# midikeys
+# midikeys
 
 Utility that simulates keyboard input based on MIDI messages.
 
@@ -24,16 +24,22 @@ Utility that simulates keyboard input based on MIDI messages.
 |-------------|-------|---------|-------------------------|
 | `--verbose` | `-v`  | boolean | Enable extended logging |
 
-### List MIDI ports
+### List MIDI Ports
 
 ```shell
 midikeys --list
 ```
 
+### Verify Configuration
+
+```shell
+midikeys --verify <mapping> <device_profile>
+```
+
 ### Run
 
 ```shell
-midikeys --input=<port> --output=<port> <mapping_file>
+midikeys --input=<port> --output=<port> <mapping> <device_profile>
 ```
 
 **Example**
@@ -44,18 +50,25 @@ midikeys --input=0 --output=0 "mappings/rekordbox.toml"
 
 ## Mappings
 
-Mapping can be defined in `toml`. The root of a mapping file always contains an array of tables `[[inputs]]`, you can
-use the array entries to specify mapping from a specific MIDI CC message to a key press.
+Mappings are defined in `yaml` and allow you to dynamically bind MIDI events to key strokes.
 
-```toml
-# Map MIDI CC11 to arrow_left
-[[inputs]]
-channel = 1 # MIDI CC Channel
-control = 11 # MIDI CC Control
-key = "arrow_left"
-feedback = { off = "dark_red", on = "light_red" } # Specify on and off colour
+```yaml
+mappings:
+# MIDI CC 11 to left arrow
+- channel: 1
+  control: 11
+  key: arrow_left
+  feedback:
+    off: dark_red
+    on: light_red
 
-# ... <inputs>
+# MIDI CC 12 to right arrow
+- channel: 1
+  control: 12
+  key: arrow_right
+  feedback:
+    off: dark_red
+    on: light_red
 ```
 
 ### Color Table
@@ -76,17 +89,18 @@ feedback = { off = "dark_red", on = "light_red" } # Specify on and off colour
 
 ## Device Profiles
 
-Device profiles can be defined in `toml`. The following snippet is a short example device profile for the Novation
-Launchpad X.
+Devices profiles allow users to add support for a specific MIDI device.
 
 ```toml
-[messages]
-# MIDI message(s) sent when the connection is open
-open = [[240, 0, 32, 41, 2, 12, 14, 1, 247]] # Switch programmer layout
-# MIDI message(s) sent when the connection will be closed
-close = [[240, 0, 32, 41, 2, 12, 14, 0, 247]] # Switch back to live layout
+# Messages sent upon opening or closing the MIDI connection
+messages:
+  open:
+  - [240, 0, 32, 41, 2, 12, 14, 1, 247] # Select programmer layout
+  close:
+  - [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
 
-[colours]
-dark_red = 7 # Map to MIDI CC value
-light_red = 5 # Map to MIDI CC value
+# Color -> MIDI CC value mapping
+colors:
+  dark_red: 7
+  light_red: 5
 ```

@@ -12,7 +12,7 @@ namespace midikeys
     public:
         input_mapping();
 
-        static std::unique_ptr<input_mapping> from_toml_file(const std::filesystem::path& path);
+        static std::unique_ptr<input_mapping> from_yaml_file(const std::filesystem::path& path);
 
         const input_binding* get_binding(uint8_t channel, uint8_t control) const;
 
