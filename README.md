@@ -36,6 +36,11 @@ midikeys --list
 midikeys --verify <mapping> <device_profile>
 ```
 
+**Example**
+```shell
+midikeys --verify rekordbox novation-launchpad-x
+```
+
 ### Run
 
 ```shell
@@ -45,7 +50,7 @@ midikeys --input=<port> --output=<port> <mapping> <device_profile>
 **Example**
 
 ```shell
-midikeys --input=0 --output=0 "mappings/rekordbox.toml"
+midikeys --input=0 --output=0 rekordbox novation-launchpad-x
 ```
 
 ## Mappings
