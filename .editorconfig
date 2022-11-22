@@ -1,0 +1,43 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{json,yml}]
+indent_style = space
+indent_size = 2
+
+[*.{cpp,hpp}]
+cpp_brace_style = end_of_line
+cpp_keep_blank_lines_in_declarations = 1
+cpp_keep_blank_lines_in_code = 1
+cpp_blank_lines_around_class_definition = 0
+cpp_blank_lines_around_function_declaration = 1
+cpp_blank_lines_around_single_line_function_definition = 1
+cpp_blank_lines_around_namespace = 0
+cpp_blank_lines_around_other_declaration = 0
+cpp_continuous_line_indent = single
+cpp_use_continuous_line_indent_in_method_pars = false
+cpp_use_continuous_line_indent_in_expression_braces = false
+cpp_namespace_indentation = none
+cpp_indent_access_specifiers_from_class = false
+cpp_indent_class_members_from_access_specifiers = true
+cpp_indent_wrapped_function_names = false
+cpp_indent_switch_labels = false
+cpp_indent_method_decl_pars = inside
+cpp_indent_invocation_pars = inside
+cpp_indent_statement_pars = inside
+cpp_indent_preprocessor_directives = none
+cpp_indent_comment = true
+cpp_align_multiple_declaration = true
+cpp_align_multiline_parameter = true
+cpp_align_first_arg_by_paren = false
+cpp_align_multiline_expression_braces = false
+cpp_align_multiline_type_parameter = false
+align_multiline_type_argument = false
+cpp_align_multiline_extends_list = false
+cpp_align_multiline_ctor_init = false
+cpp_align_multiline_calls_chain = false
