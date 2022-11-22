@@ -1,8 +1,8 @@
 #include "app.hpp"
 #include "midi/midi_api_factory.hpp"
-#include "stateful_midi_listener.hpp"
 #include "io/input_factory.hpp"
 #include "io/input_mapping.hpp"
+#include "io/input_manager.hpp"
 #include <spdlog/spdlog.h>
 
 namespace midikeys {
@@ -76,9 +76,9 @@ namespace midikeys {
         input.initialize();
 
         m_midi_device = m_midi_api->make_device(
-                input_port_descriptor.value(),
-                output_port_descriptor.value(),
-                std::make_unique<stateful_midi_listener>(input));
+            input_port_descriptor.value(),
+            output_port_descriptor.value(),
+            nullptr);
 
         const auto worker = m_midi_device->open();
 

@@ -27,7 +27,12 @@ namespace midikeys
 
         auto worker = std::make_shared<midi_worker>(*this);
 
-        m_listener->handle_open(*this);
+        if (m_listener) {
+            m_listener->handle_open(*this);
+        }
+        else {
+            spdlog::warn("No listener defined.");
+        }
 
         return worker;
     }
@@ -36,7 +41,9 @@ namespace midikeys
     {
         spdlog::debug("Closing MIDI ports");
 
-        m_listener->handle_close(*this);
+        if (m_listener) {
+            m_listener->handle_close(*this);
+        }
 
         m_output->close();
         m_input->close();
@@ -62,8 +69,8 @@ namespace midikeys
         return *m_output;
     }
 
-    midi_listener& midi_device::listener()
+    midi_listener* midi_device::listener() const
     {
-        return *m_listener;
+        return m_listener.get();
     }
 }

@@ -30,7 +30,11 @@ namespace midikeys
             m_device.get().input().get_message(message);
 
             if (message.size() > 0) {
-                m_device.get().listener().handle_message(m_device, message);
+                const auto& listener = m_device.get().listener();
+
+                if (listener) {
+                    listener->handle_message(m_device.get(), message);
+                }
             }
         }
 

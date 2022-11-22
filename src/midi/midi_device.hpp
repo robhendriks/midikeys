@@ -29,6 +29,6 @@ namespace midikeys {
 
         const midi_output &output() const;
 
-        midi_listener &listener();
+        midi_listener* listener() const;
     };
 }
