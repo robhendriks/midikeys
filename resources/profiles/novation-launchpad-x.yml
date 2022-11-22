@@ -1,9 +1,9 @@
 # Messages sent upon opening or closing the MIDI connection
 messages:
   open:
-  - [240, 0, 32, 41, 2, 12, 14, 1, 247] # Select programmer layout
+    - [240, 0, 32, 41, 2, 12, 14, 1, 247] # Select programmer layout
   close:
-  - [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
+    - [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
 
 # Color -> MIDI CC value mapping
 colors:
