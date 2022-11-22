@@ -58,6 +58,7 @@ midikeys --input=0 --output=0 rekordbox novation-launchpad-x
 Mappings are defined in `yaml` and allow you to dynamically bind MIDI events to key strokes.
 
 ```yaml
+# Rekorbox
 mapping:
   # MIDI CC 11 to left arrow
   - control_change:
@@ -99,6 +100,7 @@ mapping:
 Devices profiles allow users to add support for a specific MIDI device.
 
 ```yaml
+# Novation Launchpad X
 profile:
   # Messages sent upon opening or closing the MIDI connection
   messages:
