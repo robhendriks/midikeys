@@ -91,7 +91,7 @@ mappings:
 
 Devices profiles allow users to add support for a specific MIDI device.
 
-```toml
+```yaml
 # Messages sent upon opening or closing the MIDI connection
 messages:
   open:
