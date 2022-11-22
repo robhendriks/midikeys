@@ -1,14 +1,16 @@
 mappings:
-- channel: 1
-  control: 11
-  key: arrow_left
-  feedback:
-    off: dark_red
-    on: light_red
+  # MIDI CC 11 to left arrow
+  - channel: 1
+    control: 11
+    key: arrow_left
+    feedback:
+      off: dark_red
+      on: light_red
 
-- channel: 1
-  control: 12
-  key: arrow_right
-  feedback:
-    off: dark_red
-    on: light_red
+  # MIDI CC 12 to right arrow
+  - channel: 1
+    control: 12
+    key: arrow_right
+    feedback:
+      off: dark_red
+      on: light_red
