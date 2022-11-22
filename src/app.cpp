@@ -71,7 +71,7 @@ namespace midikeys {
 
         input_manager input{
             input_factory::make_platform_default(),
-            input_mapping::from_toml_file(cmdl.pos_args().at(1))
+            input_mapping::from_yaml_file(cmdl.pos_args().at(1))
         };
 
         input.initialize();
@@ -88,6 +88,13 @@ namespace midikeys {
 
         worker->dispose();
         m_midi_device->close();
+    }
+
+    void app::run_command_verify(const argh::parser& cmdl) {
+        if (cmdl.pos_args().size() < 2) {
+            spdlog::error("Usage: midikeys --verify <mapping_file>");
+            return;
+        }
     }
 
     void app::run_command_list(const argh::parser&) {
@@ -128,9 +135,14 @@ namespace midikeys {
         const app_options options = app_options::from_cmdl(cmdl);
         configure(options);
 
+        bool is_command_verify = cmdl[{"--verify"}];
         bool is_command_list = cmdl[{"--list"}];
 
-        if (is_command_list) {
+
+        if (is_command_verify) {
+            run_command_verify(cmdl);
+        }
+        else if (is_command_list) {
             run_command_list(cmdl);
         }
         else {

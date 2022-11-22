@@ -1,9 +1,0 @@
-[[inputs]]
-channel = 1
-control = 14
-key = "arrow_left"
-
-[[inputs]]
-channel = 1
-control = 15
-key = "arrow_right"
