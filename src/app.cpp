@@ -6,14 +6,14 @@
 #include <spdlog/spdlog.h>
 
 namespace midikeys {
-    app_options app_options::from_cmdl(const argh::parser &cmdl) {
+    app_options app_options::from_cmdl(const argh::parser& cmdl) {
         const bool verbose = cmdl[{"-v", "--verbose"}];
-        return {verbose};
+        return { verbose };
     }
 
     app::app() noexcept
-            : m_midi_api(nullptr),
-              m_midi_device(nullptr) {}
+        : m_midi_api(nullptr),
+        m_midi_device(nullptr) {}
 
     void app::initialize_midi_api() {
         m_midi_api = midi_api_factory::make_platform_default();
@@ -23,13 +23,14 @@ namespace midikeys {
         try {
             initialize_midi_api();
             return true;
-        } catch (const std::exception &e) {
+        }
+        catch (const std::exception& e) {
             spdlog::error("Unable to initialize MIDI api: {}", e.what());
             return false;
         }
     }
 
-    void app::run_command_root(const argh::parser &cmdl) {
+    void app::run_command_root(const argh::parser& cmdl) {
         if (!try_initialize_midi_api()) {
             return;
         }
@@ -39,7 +40,7 @@ namespace midikeys {
         size_t input_port_number;
         size_t output_port_number;
 
-        if (!(cmdl({"-i", "--input"}) >> input_port_number)) {
+        if (!(cmdl({ "-i", "--input" }) >> input_port_number)) {
             spdlog::error("Please specify a MIDI input port number using '--input=<port_number>'");
             return;
         }
@@ -51,7 +52,7 @@ namespace midikeys {
             return;
         }
 
-        if (!(cmdl({"-o", "--output"}) >> output_port_number)) {
+        if (!(cmdl({ "-o", "--output" }) >> output_port_number)) {
             spdlog::error("Please specify a MIDI output port number using '--output=<port_number>'");
             return;
         }
@@ -69,8 +70,8 @@ namespace midikeys {
         }
 
         input_manager input{
-                input_factory::make_platform_default(),
-                input_mapping::from_toml_file(cmdl.pos_args().at(1))
+            input_factory::make_platform_default(),
+            input_mapping::from_toml_file(cmdl.pos_args().at(1))
         };
 
         input.initialize();
@@ -89,7 +90,7 @@ namespace midikeys {
         m_midi_device->close();
     }
 
-    void app::run_command_list(const argh::parser &) {
+    void app::run_command_list(const argh::parser&) {
         if (!try_initialize_midi_api()) {
             return;
         }
@@ -97,29 +98,31 @@ namespace midikeys {
         const midi_port_discovery_result result = m_midi_api->discover_ports();
 
         if (!result.inputs.empty()) {
-            for (const midi_port_descriptor &input: result.inputs) {
+            for (const midi_port_descriptor& input : result.inputs) {
                 spdlog::info("[INPUT] {} --> '{}'", input.port_number, input.port_name);
             }
-        } else {
+        }
+        else {
             spdlog::warn("No MIDI inputs available.");
         }
 
         if (!result.outputs.empty()) {
-            for (const midi_port_descriptor &output: result.outputs) {
+            for (const midi_port_descriptor& output : result.outputs) {
                 spdlog::info("[OUTPUT] {} --> '{}'", output.port_number, output.port_name);
             }
-        } else {
+        }
+        else {
             spdlog::warn("No MIDI outputs available.");
         }
     }
 
-    void app::configure(const app_options &options) {
+    void app::configure(const app_options& options) {
         if (options.verbose) {
             spdlog::set_level(spdlog::level::debug);
         }
     }
 
-    void app::run(const char **argv) {
+    void app::run(const char** argv) {
         const argh::parser cmdl(argv);
 
         const app_options options = app_options::from_cmdl(cmdl);
@@ -129,7 +132,8 @@ namespace midikeys {
 
         if (is_command_list) {
             run_command_list(cmdl);
-        } else {
+        }
+        else {
             run_command_root(cmdl);
         }
     }
