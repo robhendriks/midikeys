@@ -6,13 +6,35 @@
 #include <spdlog/spdlog.h>
 
 namespace midikeys {
+    app_paths app_paths::make_default()
+    {
+        const fs::path root = fs::current_path();
+
+        return {
+            root,
+            root / "mappings",
+            root / "profiles"
+        };
+    }
+
+    fs::path app_paths::get_mapping_path(const std::string& name) const
+    {
+        return mapping_dir_path / (name + ".yml");
+    }
+
+    fs::path app_paths::get_profile_path(const std::string& name) const
+    {
+        return profile_dir_path / (name + ".yml");
+    }
+
     app_options app_options::from_cmdl(const argh::parser& cmdl) {
         const bool verbose = cmdl[{"-v", "--verbose"}];
         return { verbose };
     }
 
-    app::app() noexcept
-        : m_midi_api(nullptr),
+    app::app(app_paths paths) noexcept
+        : m_paths(std::move(paths)),
+        m_midi_api(nullptr),
         m_midi_device(nullptr) {}
 
     void app::initialize_midi_api() {
@@ -91,8 +113,22 @@ namespace midikeys {
     }
 
     void app::run_command_verify(const argh::parser& cmdl) {
-        if (cmdl.pos_args().size() < 2) {
-            spdlog::error("Usage: midikeys --verify <mapping_file>");
+        const auto& pos_args = cmdl.pos_args();
+
+        if (pos_args.size() < 3) {
+            spdlog::error("Usage: midikeys --verify <mapping> <profile>");
+            return;
+        }
+
+        const fs::path mapping_path = m_paths.get_mapping_path(pos_args.at(1));
+        if (!fs::is_regular_file(mapping_path)) {
+            spdlog::error("Mapping not found: {}", mapping_path.string());
+            return;
+        }
+
+        const fs::path profile_path = m_paths.get_profile_path(pos_args.at(2));
+        if (!fs::is_regular_file(profile_path)) {
+            spdlog::error("Profile not found: {}", profile_path.string());
             return;
         }
     }
