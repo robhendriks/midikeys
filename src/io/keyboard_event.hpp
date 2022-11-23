@@ -9,10 +9,43 @@ namespace midikeys
 {
     enum class keyboard_code : uint8_t
     {
+        escape,
+
+        // Function keys
+        function_1,
+        function_2,
+        function_3,
+        function_4,
+        function_5,
+        function_6,
+        function_7,
+        function_8,
+        function_9,
+        function_10,
+        function_11,
+        function_12,
+
+        // Arrow keys
         arrow_up,
         arrow_down,
         arrow_left,
-        arrow_right
+        arrow_right,
+
+        // Number keys
+        number_1,
+        number_2,
+        number_3,
+        number_4,
+        number_5,
+        number_6,
+        number_7,
+        number_8,
+        number_9,
+        number_0,
+
+        // Symbol keys
+        symbol_minus,
+        symbol_plus
     };
 
     inline keyboard_code key_from_string(const std::string& str)
