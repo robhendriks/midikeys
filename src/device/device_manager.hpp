@@ -3,6 +3,7 @@
 #include "device_mapping.hpp"
 #include "device_profile.hpp"
 #include "../midi/midi_listener.hpp"
+#include "../input/input_api.hpp"
 #include <memory>
 #include <filesystem>
 #include <unordered_map>
@@ -20,14 +21,18 @@ namespace midikeys
 
     class device_manager : public midi_listener
     {
+        std::unique_ptr<input_api> m_input_api;
+
         device_mapping m_mapping;
         device_profile m_profile;
         device_state m_state;
 
         void midi_update(const midi_device& device) const;
 
+        std::vector<keyboard_event> create_keyboard_events(const midi_key& key) const;
+
     public:
-        device_manager();
+        device_manager(std::unique_ptr<input_api> input_api);
 
         bool try_load_mapping(const fs::path& path);
         bool try_load_profile(const fs::path& path);

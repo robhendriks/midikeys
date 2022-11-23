@@ -3,6 +3,7 @@
 #include <filesystem>
 #include "device_message.hpp"
 #include "../midi/midi_map.hpp"
+#include "../input/keyboard_event.hpp"
 
 namespace fs = std::filesystem;
 
@@ -19,7 +20,7 @@ namespace midikeys
 		device_control_type control_type;
 		uint8_t midi_channel;
 		uint8_t midi_control;
-		std::vector<std::string> keys;
+		std::vector<key_type> keys;
 		std::string color_on;
 		std::string color_off;
 

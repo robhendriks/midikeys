@@ -1,8 +1,7 @@
 #include "app.hpp"
 #include "midi/midi_api_factory.hpp"
-#include "io/input_factory.hpp"
-#include "io/input_manager.hpp"
 #include "device/device_profile.hpp"
+#include "input/input_api_factory.hpp"
 #include <spdlog/spdlog.h>
 
 namespace midikeys {
@@ -49,9 +48,11 @@ namespace midikeys {
         const fs::path mapping_path = m_paths.get_mapping_path(pos_args.at(1));
         const fs::path profile_path = m_paths.get_profile_path(pos_args.at(2));
 
-        m_device_manager = std::make_unique<device_manager>();
+        m_device_manager = std::make_unique<device_manager>(
+            input_api_factory::make_platform_default());
 
-        return m_device_manager->try_load_profile(profile_path) && m_device_manager->try_load_mapping(mapping_path);
+        return m_device_manager->try_load_profile(profile_path)
+            && m_device_manager->try_load_mapping(mapping_path);
     }
 
     bool app::initialize_midi_api(const argh::parser& cmdl) {
@@ -103,13 +104,6 @@ namespace midikeys {
         if (!initialize_midi_api(cmdl)) {
             return;
         }
-
-        //input_manager input{
-        //    input_factory::make_platform_default(),
-        //    input_mapping::from_yaml_file(cmdl.pos_args().at(1))
-        //};
-
-        //input.initialize();
 
         const auto worker = m_midi_device->open();
 
