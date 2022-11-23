@@ -60,31 +60,27 @@ Mappings are defined in `yaml` and allow you to dynamically bind MIDI events to 
 ```yaml
 # Rekorbox
 mapping:
-  # MIDI CC 11 to left arrow
+  # Map MIDI CC 13 to left arrow
   - control_change:
       channel: 1
-      control: 11
-      key: arrow_left
-      feedback:
-        off: dark_red
-        on: light_red
+      control: 13
+      keys:
+        # Single keystroke
+        - arrow_left
+      # Maps to color 'red' defined in the device profile
+      color: red
 
-  # MIDI CC 12 to right arrow
+  # Map MIDI CC 14 to right arrow
   - control_change:
       channel: 1
-      control: 12
-      key: arrow_right
-      feedback:
-        off: dark_red
-        on: light_red
+      control: 14
+      keys:
+        # Multiple keystrokes
+        - shift_left
+        - arrow_right
+      # Maps to color 'green' defined in the device profile
+      color: green
 ```
-
-### Color Table
-
-| Colour      |
-|-------------|
-| `light_red` |
-| `dark_red`  |
 
 ### Key Table
 
@@ -102,16 +98,25 @@ Devices profiles allow users to add support for a specific MIDI device.
 ```yaml
 # Novation Launchpad X
 profile:
-  # Messages sent upon opening or closing the MIDI connection
   messages:
+    # MIDI messages to send when connected
     open:
       - sysex: [240, 0, 32, 41, 2, 12, 14, 1, 247] # Select progammer layout
+      - sysex: [240, 0, 32, 41, 2, 12, 8, 127, 247] # Max brightness
+      - sysex: [240, 0, 32, 41, 2, 12, 4, 3, 127, 247] # Fixed velocity curve
+    # MIDI messages to send before connection closes
     close:
       - sysex: [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
 
-  # Color -> MIDI CC value mapping
+  # Color to MIDI mapping
+  # color_name: [on CC value, off CC value]
   colors:
-    dark_red: 7
-    light_red: 5
-
+    red: [7, 5]
+    green: [23, 21]
+    blue: [47, 45]
+    cyan: [39, 37]
+    magenta: [55, 53]
+    yellow: [15, 13]
+    orange: [10, 9]
+    pink: [56, 57]
 ```
