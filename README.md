@@ -4,6 +4,8 @@ Utility that simulates keyboard input based on MIDI messages.
 
 ![Screenshot](docs/images/screenshot.jpg)
 
+> ⚠ Currently only supports keyboard with a European QWERTY layout.
+
 ## Platforms
 
 - Windows
