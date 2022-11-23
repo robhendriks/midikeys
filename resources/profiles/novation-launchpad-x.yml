@@ -3,6 +3,8 @@ profile:
   messages:
     open:
       - sysex: [240, 0, 32, 41, 2, 12, 14, 1, 247] # Select progammer layout
+      - sysex: [240, 0, 32, 41, 2, 12, 8, 127, 247] # Max brightness
+      - sysex: [240, 0, 32, 41, 2, 12, 4, 3, 127, 247] # Fixed velocity curve
     close:
       - sysex: [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
 
@@ -10,3 +12,5 @@ profile:
   colors:
     dark_red: 7
     light_red: 5
+    dark_orange: 10
+    light_orange: 9

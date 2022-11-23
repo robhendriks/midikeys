@@ -1,7 +1,6 @@
 #include "app.hpp"
 #include "midi/midi_api_factory.hpp"
 #include "io/input_factory.hpp"
-#include "io/input_mapping.hpp"
 #include "io/input_manager.hpp"
 #include "device/device_profile.hpp"
 #include <spdlog/spdlog.h>
@@ -36,27 +35,27 @@ namespace midikeys {
     app::app(app_paths paths) noexcept
         : m_paths(std::move(paths)),
         m_midi_api(nullptr),
-        m_midi_device(nullptr) {}
+        m_midi_device(nullptr),
+        m_device_manager(nullptr) {}
 
-    void app::initialize_midi_api() {
-        m_midi_api = midi_api_factory::make_platform_default();
-    }
+    bool app::initialize_device_manager(const argh::parser& cmdl)
+    {
+        const auto& pos_args = cmdl.pos_args();
 
-    bool app::try_initialize_midi_api() {
-        try {
-            initialize_midi_api();
-            return true;
-        }
-        catch (const std::exception& e) {
-            spdlog::error("Unable to initialize MIDI api: {}", e.what());
+        if (pos_args.size() < 3) {
             return false;
         }
+
+        const fs::path mapping_path = m_paths.get_mapping_path(pos_args.at(1));
+        const fs::path profile_path = m_paths.get_profile_path(pos_args.at(2));
+
+        m_device_manager = std::make_unique<device_manager>();
+
+        return m_device_manager->try_load_profile(profile_path) && m_device_manager->try_load_mapping(mapping_path);
     }
 
-    void app::run_command_root(const argh::parser& cmdl) {
-        if (!try_initialize_midi_api()) {
-            return;
-        }
+    bool app::initialize_midi_api(const argh::parser& cmdl) {
+        m_midi_api = midi_api_factory::make_platform_default();
 
         const midi_port_discovery_result result = m_midi_api->discover_ports();
 
@@ -65,44 +64,52 @@ namespace midikeys {
 
         if (!(cmdl({ "-i", "--input" }) >> input_port_number)) {
             spdlog::error("Please specify a MIDI input port number using '--input=<port_number>'");
-            return;
+            return false;
         }
 
         const auto input_port_descriptor = result.find_input(input_port_number);
 
         if (!input_port_descriptor.has_value()) {
             spdlog::error("Invalid MIDI input port: {}", input_port_number);
-            return;
+            return false;
         }
 
         if (!(cmdl({ "-o", "--output" }) >> output_port_number)) {
             spdlog::error("Please specify a MIDI output port number using '--output=<port_number>'");
-            return;
+            return false;
         }
 
         const auto output_port_descriptor = result.find_output(output_port_number);
 
         if (!output_port_descriptor.has_value()) {
             spdlog::error("Invalid MIDI output port: {}", output_port_number);
-            return;
+            return false;
         }
-
-        if (cmdl.pos_args().size() < 2) {
-            spdlog::error("Usage: midikeys [options] <mapping_file>");
-            return;
-        }
-
-        input_manager input{
-            input_factory::make_platform_default(),
-            input_mapping::from_yaml_file(cmdl.pos_args().at(1))
-        };
-
-        input.initialize();
 
         m_midi_device = m_midi_api->make_device(
             input_port_descriptor.value(),
-            output_port_descriptor.value(),
-            nullptr);
+            output_port_descriptor.value());
+
+        m_midi_device->set_listener(shared_from_this());
+
+        return true;
+    }
+
+    void app::run_command_root(const argh::parser& cmdl) {
+        if (!initialize_device_manager(cmdl)) {
+            return;
+        }
+
+        if (!initialize_midi_api(cmdl)) {
+            return;
+        }
+
+        //input_manager input{
+        //    input_factory::make_platform_default(),
+        //    input_mapping::from_yaml_file(cmdl.pos_args().at(1))
+        //};
+
+        //input.initialize();
 
         const auto worker = m_midi_device->open();
 
@@ -116,35 +123,11 @@ namespace midikeys {
     void app::run_command_verify(const argh::parser& cmdl) {
         const auto& pos_args = cmdl.pos_args();
 
-        if (pos_args.size() < 3) {
-            spdlog::error("Usage: midikeys --verify <mapping> <profile>");
-            return;
-        }
-
-        const fs::path mapping_path = m_paths.get_mapping_path(pos_args.at(1));
-        if (!fs::is_regular_file(mapping_path)) {
-            spdlog::error("Mapping not found: {}", mapping_path.string());
-            return;
-        }
-
-        const fs::path profile_path = m_paths.get_profile_path(pos_args.at(2));
-        if (!fs::is_regular_file(profile_path)) {
-            spdlog::error("Profile not found: {}", profile_path.string());
-            return;
-        }
-
-        try {
-            const auto profile = device_profile::from_yaml_file(profile_path);
-        }
-        catch (const std::exception& e) {
-            spdlog::error("Profile contains error(s): {}", e.what());
-        }
+        initialize_device_manager(cmdl);
     }
 
     void app::run_command_list(const argh::parser&) {
-        if (!try_initialize_midi_api()) {
-            return;
-        }
+        m_midi_api = midi_api_factory::make_platform_default();
 
         const midi_port_discovery_result result = m_midi_api->discover_ports();
 
@@ -192,5 +175,20 @@ namespace midikeys {
         else {
             run_command_root(cmdl);
         }
+    }
+
+    void app::handle_open(const midi_device& device)
+    {
+        m_device_manager->handle_open(device); // Proxy to device manager
+    }
+
+    void app::handle_message(const midi_device& device, const midi_message& message)
+    {
+        m_device_manager->handle_message(device, message); // Proxy to device manager
+    }
+
+    void app::handle_close(const midi_device& device)
+    {
+        m_device_manager->handle_close(device); // Proxy to device manager
     }
 }

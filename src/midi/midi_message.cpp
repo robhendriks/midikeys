@@ -20,17 +20,17 @@ namespace midikeys
     {
     }
 
-    midi_message midi_message::control_change(const uint8_t channel, const uint8_t control, const uint8_t value)
+    midi_message midi_message::make_control_change(const uint8_t channel, const uint8_t control, const uint8_t value)
     {
         return{ midi_util::make_command(message_type::CONTROL_CHANGE, channel), control, value };
     }
 
-    midi_message midi_message::note_off(const uint8_t channel, const uint8_t note, const uint8_t velocity)
+    midi_message midi_message::make_note_off(const uint8_t channel, const uint8_t note, const uint8_t velocity)
     {
         return { midi_util::make_command(message_type::NOTE_ON, channel), note, velocity };
     }
 
-    midi_message midi_message::note_on(const uint8_t channel, const uint8_t note, const uint8_t velocity)
+    midi_message midi_message::make_note_on(const uint8_t channel, const uint8_t note, const uint8_t velocity)
     {
         return { midi_util::make_command(message_type::NOTE_ON, channel), note, velocity };
     }

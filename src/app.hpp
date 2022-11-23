@@ -4,6 +4,7 @@
 #include <memory>
 #include <filesystem>
 #include "midi/midi_api.hpp"
+#include "device/device_manager.hpp"
 
 namespace fs = std::filesystem;
 
@@ -25,10 +26,11 @@ namespace midikeys {
         static app_options from_cmdl(const argh::parser& cmdl);
     };
 
-    class app {
+    class app : public std::enable_shared_from_this<app>, public midi_listener {
         const app_paths m_paths;
         std::unique_ptr<midi_api> m_midi_api;
         std::unique_ptr<midi_device> m_midi_device;
+        std::unique_ptr<device_manager> m_device_manager;
 
         void run_command_root(const argh::parser& cmdl);
 
@@ -38,9 +40,15 @@ namespace midikeys {
 
         void configure(const app_options& options);
 
-        void initialize_midi_api();
+        bool initialize_device_manager(const argh::parser& cmdl);
 
-        bool try_initialize_midi_api();
+        bool initialize_midi_api(const argh::parser& cmdl);
+
+        void handle_open(const midi_device& device) override;
+
+        void handle_message(const midi_device& device, const midi_message& message) override;
+
+        void handle_close(const midi_device& device) override;
 
     public:
         app(app_paths paths) noexcept;

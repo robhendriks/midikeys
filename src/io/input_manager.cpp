@@ -3,10 +3,8 @@
 
 namespace midikeys
 {
-    input_manager::input_manager(std::unique_ptr<input_handler> handler, std::unique_ptr<input_mapping> mapping)
-        : m_handler(std::move(handler)), m_mapping(std::move(mapping))
-    {
-    }
+    input_manager::input_manager(std::unique_ptr<input_handler> handler)
+        : m_handler(std::move(handler)) {}
 
     void input_manager::initialize()
     {
@@ -28,15 +26,5 @@ namespace midikeys
     const input_handler& input_manager::handler() const
     {
         return *m_handler;
-    }
-
-    input_mapping& input_manager::mapping()
-    {
-        return *m_mapping;
-    }
-
-    const input_mapping& input_manager::mapping() const
-    {
-        return *m_mapping;
     }
 }
