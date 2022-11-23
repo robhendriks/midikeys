@@ -1,97 +1,21 @@
 mapping:
-  # MIDI CC 13 to left arrow
-  - control_change:
-      channel: 1
-      control: 13
-      keys:
-        - arrow_left
+  # CC Channel 1, Control 21-28
+  - range:
+      type: button
+      midi:
+        channel: 1
+        control: [21, 28]
+      keyboard: [q, w, e, r, t, y, u, i]
+      color: green
+
+  # CC Channel 1, Control 13
+  - button:
+      midi: [1, 13]
+      keyboard: [arrow_left]
       color: orange
 
-  # MIDI CC 14 to left arrow
-  - control_change:
-      channel: 1
-      control: 14
-      keys:
-        - arrow_left
+  # CC Channel 1, Control 14
+  - button:
+      midi: [1, 14]
+      keyboard: [arrow_left]
       color: red
-
-  # MIDI CC 15 to right arrow
-  - control_change:
-      channel: 1
-      control: 15
-      keys:
-        - arrow_right
-      color: red
-
-# MIDI CC 16 to left arrow
-  - control_change:
-      channel: 1
-      control: 16
-      keys:
-        - arrow_right
-      color: orange
-
-  # MIDI CC 21 to left arrow
-  - control_change:
-      channel: 1
-      control: 21
-      keys:
-        - arrow_left
-      color: cyan
-
-  # MIDI CC 22 to left arrow
-  - control_change:
-      channel: 1
-      control: 22
-      keys:
-        - arrow_left
-      color: cyan
-
-  # MIDI CC 23 to right arrow
-  - control_change:
-      channel: 1
-      control: 23
-      keys:
-        - arrow_right
-      color: cyan
-
-# MIDI CC 24 to left arrow
-  - control_change:
-      channel: 1
-      control: 24
-      keys:
-        - arrow_right
-      color: cyan
-
-  
-  # MIDI CC 25 to left arrow
-  - control_change:
-      channel: 1
-      control: 25
-      keys:
-        - arrow_left
-      color: cyan
-
-  # MIDI CC 26 to left arrow
-  - control_change:
-      channel: 1
-      control: 26
-      keys:
-        - arrow_left
-      color: cyan
-
-  # MIDI CC 27 to right arrow
-  - control_change:
-      channel: 1
-      control: 27
-      keys:
-        - arrow_right
-      color: cyan
-
-# MIDI CC 28 to left arrow
-  - control_change:
-      channel: 1
-      control: 28
-      keys:
-        - arrow_right
-      color: cyan

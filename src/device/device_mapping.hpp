@@ -8,9 +8,15 @@ namespace fs = std::filesystem;
 
 namespace midikeys
 {
+	enum device_control_type
+	{
+		BUTTON,
+		ENCODER
+	};
+
 	struct device_input_mapping
 	{
-		device_message_type midi_message_type;
+		device_control_type control_type;
 		uint8_t midi_channel;
 		uint8_t midi_control;
 		std::vector<std::string> keys;
