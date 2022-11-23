@@ -1,18 +1,40 @@
 mapping:
-  # MIDI CC 11 to left arrow
+  # MIDI CC 13 to left arrow
   - control_change:
       channel: 1
-      control: 11
-      key: arrow_left
+      control: 13
+      keys:
+        - arrow_left
+      feedback:
+        off: dark_orange
+        on: light_orange
+
+  # MIDI CC 14 to left arrow
+  - control_change:
+      channel: 1
+      control: 14
+      keys:
+        - arrow_left
       feedback:
         off: dark_red
         on: light_red
 
-  # MIDI CC 12 to right arrow
+  # MIDI CC 15 to right arrow
   - control_change:
       channel: 1
-      control: 12
-      key: arrow_right
+      control: 15
+      keys:
+        - arrow_right
       feedback:
         off: dark_red
         on: light_red
+
+# MIDI CC 16 to left arrow
+  - control_change:
+      channel: 1
+      control: 16
+      keys:
+        - arrow_right
+      feedback:
+        off: dark_orange
+        on: light_orange

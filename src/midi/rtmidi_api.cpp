@@ -4,7 +4,7 @@
 #include <RtMidi.h>
 
 namespace midikeys {
-    std::vector<midi_port_descriptor> rtmidi_api::create_port_descriptors(RtMidi &port) {
+    std::vector<midi_port_descriptor> rtmidi_api::create_port_descriptors(RtMidi& port) {
         std::vector<midi_port_descriptor> port_descriptors;
 
         const size_t n_ports = port.getPortCount();
@@ -26,13 +26,11 @@ namespace midikeys {
         };
     }
 
-    std::unique_ptr<midi_device> rtmidi_api::make_device(const midikeys::midi_port_descriptor &input_port_descriptor,
-                                                         const midikeys::midi_port_descriptor &output_port_descriptor,
-                                                         std::unique_ptr<midi_listener> listener) const {
+    std::unique_ptr<midi_device> rtmidi_api::make_device(
+        const midikeys::midi_port_descriptor& input_port_descriptor,
+        const midikeys::midi_port_descriptor& output_port_descriptor) const {
         return std::make_unique<midi_device>(
-                std::make_unique<rtmidi_input>(input_port_descriptor),
-                std::make_unique<rtmidi_output>(output_port_descriptor),
-                std::move(listener)
-        );
+            std::make_unique<rtmidi_input>(input_port_descriptor),
+            std::make_unique<rtmidi_output>(output_port_descriptor));
     }
 }

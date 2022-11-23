@@ -1,27 +1,17 @@
 #pragma once
 
+#include "../midi/midi_message.hpp"
+#include "device_message.hpp"
 #include <unordered_map>
 #include <filesystem>
 #include <stdexcept>
 #include <yaml-cpp/yaml.h>
+#include <spdlog/fmt/fmt.h>
 
 namespace fs = std::filesystem;
 
 namespace midikeys
 {
-    enum device_message_type
-    {
-        UNKNOWN,
-        CONTROL_CHANGE,
-        SYSEX
-    };
-
-    struct device_message
-    {
-        device_message_type type;
-        std::vector<uint8_t> args;
-    };
-
     struct device_message_map
     {
         std::vector<device_message> open;

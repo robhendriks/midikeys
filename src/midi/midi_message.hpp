@@ -22,9 +22,9 @@ namespace midikeys
         midi_message(std::initializer_list<uint8_t> args);
         midi_message();
 
-        static midi_message control_change(const uint8_t channel, const uint8_t control, const uint8_t value);
-        static midi_message note_off(const uint8_t channel, const uint8_t note, const uint8_t velocity);
-        static midi_message note_on(const uint8_t channel, const uint8_t note, const uint8_t velocity);
+        static midi_message make_control_change(const uint8_t channel, const uint8_t control, const uint8_t value);
+        static midi_message make_note_off(const uint8_t channel, const uint8_t note, const uint8_t velocity);
+        static midi_message make_note_on(const uint8_t channel, const uint8_t note, const uint8_t velocity);
 
         message_type type() const;
         bool is_of_type(const message_type expected_type) const;

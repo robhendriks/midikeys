@@ -9,11 +9,11 @@ namespace midikeys
             return;
         }
 
-        const input_binding* binding = input.mapping().get_binding(event.channel, event.control);
+        /*const input_binding* binding = input.mapping().get_binding(event.channel, event.control);
 
         if (binding) {
             spdlog::debug("[BINDING] channel={}, control={}", event.channel, event.control);
             input.send_keyboard_event({ binding->code, binding->modifiers });
-        }
+        }*/
     }
 }

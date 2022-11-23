@@ -4,10 +4,10 @@
 
 namespace midikeys
 {
-    midi_device::midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output, std::unique_ptr<midi_listener> listener)
+    midi_device::midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output)
         : m_input(std::move(input)),
         m_output(std::move(output)),
-        m_listener(std::move(listener))
+        m_listener(std::weak_ptr<midi_listener>())
     {
     }
 
@@ -27,8 +27,8 @@ namespace midikeys
 
         auto worker = std::make_shared<midi_worker>(*this);
 
-        if (m_listener) {
-            m_listener->handle_open(*this);
+        if (auto listener = m_listener.lock()) {
+            listener->handle_open(*this);
         }
         else {
             spdlog::warn("No listener defined.");
@@ -41,8 +41,8 @@ namespace midikeys
     {
         spdlog::debug("Closing MIDI ports");
 
-        if (m_listener) {
-            m_listener->handle_close(*this);
+        if (auto listener = m_listener.lock()) {
+            listener->handle_close(*this);
         }
 
         m_output->close();
@@ -69,8 +69,11 @@ namespace midikeys
         return *m_output;
     }
 
-    midi_listener* midi_device::listener() const
-    {
-        return m_listener.get();
+    std::weak_ptr<midi_listener> midi_device::listener() const {
+        return m_listener;
+    }
+
+    void midi_device::set_listener(std::weak_ptr<midi_listener> listener) {
+        m_listener = std::move(listener);
     }
 }
