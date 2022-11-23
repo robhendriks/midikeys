@@ -9,8 +9,13 @@ profile:
       - sysex: [240, 0, 32, 41, 2, 12, 14, 0, 247] # Select live layout
 
   # Color -> MIDI CC value mapping
+  # color_name: [on CC value, off CC value]
   colors:
-    dark_red: 7
-    light_red: 5
-    dark_orange: 10
-    light_orange: 9
+    red: [7, 5]
+    green: [23, 21]
+    blue: [47, 45]
+    cyan: [39, 37]
+    magenta: [55, 53]
+    yellow: [15, 13]
+    orange: [10, 9]
+    pink: [56, 57]

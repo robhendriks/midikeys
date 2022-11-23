@@ -5,9 +5,7 @@ mapping:
       control: 13
       keys:
         - arrow_left
-      feedback:
-        off: dark_orange
-        on: light_orange
+      color: orange
 
   # MIDI CC 14 to left arrow
   - control_change:
@@ -15,9 +13,7 @@ mapping:
       control: 14
       keys:
         - arrow_left
-      feedback:
-        off: dark_red
-        on: light_red
+      color: red
 
   # MIDI CC 15 to right arrow
   - control_change:
@@ -25,9 +21,7 @@ mapping:
       control: 15
       keys:
         - arrow_right
-      feedback:
-        off: dark_red
-        on: light_red
+      color: red
 
 # MIDI CC 16 to left arrow
   - control_change:
@@ -35,6 +29,69 @@ mapping:
       control: 16
       keys:
         - arrow_right
-      feedback:
-        off: dark_orange
-        on: light_orange
+      color: orange
+
+  # MIDI CC 21 to left arrow
+  - control_change:
+      channel: 1
+      control: 21
+      keys:
+        - arrow_left
+      color: cyan
+
+  # MIDI CC 22 to left arrow
+  - control_change:
+      channel: 1
+      control: 22
+      keys:
+        - arrow_left
+      color: cyan
+
+  # MIDI CC 23 to right arrow
+  - control_change:
+      channel: 1
+      control: 23
+      keys:
+        - arrow_right
+      color: cyan
+
+# MIDI CC 24 to left arrow
+  - control_change:
+      channel: 1
+      control: 24
+      keys:
+        - arrow_right
+      color: cyan
+
+  
+  # MIDI CC 25 to left arrow
+  - control_change:
+      channel: 1
+      control: 25
+      keys:
+        - arrow_left
+      color: cyan
+
+  # MIDI CC 26 to left arrow
+  - control_change:
+      channel: 1
+      control: 26
+      keys:
+        - arrow_left
+      color: cyan
+
+  # MIDI CC 27 to right arrow
+  - control_change:
+      channel: 1
+      control: 27
+      keys:
+        - arrow_right
+      color: cyan
+
+# MIDI CC 28 to left arrow
+  - control_change:
+      channel: 1
+      control: 28
+      keys:
+        - arrow_right
+      color: cyan
