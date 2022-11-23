@@ -4,17 +4,26 @@ Utility that simulates keyboard input based on MIDI messages.
 
 ![Screenshot](docs/images/screenshot.jpg)
 
-> ⚠️ This project is work in progress and does not (yet) support dynamic device mappings.
-
 ## Platforms
 
 - Windows
+- macOS (t.b.d)
 
 ## Supported Devices
 
 | Manufacturer | Device      | Support |
 |--------------|-------------|---------|
 | Novation     | Launchpad X | 🟢 Full |
+
+> ℹ You can add support for any device using [device profiles](#device-profiles).
+
+## Supported Applications
+
+| Developer | Application | Support |
+| --------- | ----------- | ------- |
+| Pioneer   | rekordbox   | 🟢 Full |
+
+> ℹ You can add support for any application using [mappings](#mappings).
 
 ## Usage
 
