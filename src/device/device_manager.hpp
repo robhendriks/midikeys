@@ -13,9 +13,7 @@ namespace midikeys
 {
     struct device_state
     {
-        std::unordered_map<int, std::tuple<device_input_mapping*, bool>> input_states;
-
-        static int make_key(const size_t channel, const size_t control);
+        midi_map<bool> input_states;
 
         void initialize(device_mapping& mapping);
     };
