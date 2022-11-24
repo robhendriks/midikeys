@@ -6,6 +6,7 @@
 #include "../keyboard_handler.hpp"
 #include <spdlog/spdlog.h>
 #include <Windows.h>
+#include <vector>
 
 namespace midikeys
 {
@@ -134,7 +135,7 @@ namespace midikeys
 			std::vector<windows_key_press> key_presses;
 
 			while (!keys.empty()) {
-				key_presses.push_back({ input, get_virtual_key(keys.front()) });
+				key_presses.push_back(windows_key_press{ input, get_virtual_key(keys.front()) });
 				keys.pop();
 			}
 

@@ -130,7 +130,7 @@ namespace midikeys
             CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
 
             while (!keys.empty()) {
-                key_presses.push_back({ source, get_virtual_key(keys.front()) });
+                key_presses.push_back(apple_keyboard_press{ source, get_virtual_key(keys.front()) });
 
                 keys.pop();
             }
