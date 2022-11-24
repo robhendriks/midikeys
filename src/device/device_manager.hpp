@@ -12,6 +12,8 @@ namespace fs = std::filesystem;
 
 namespace midikeys
 {
+	class app;
+
 	struct device_state
 	{
 		midi_map<bool> input_states;
@@ -28,11 +30,12 @@ namespace midikeys
 		device_state m_state;
 
 		void midi_update(const midi_device& device) const;
+		void input_update(const midi_key key);
 
-		keyboard_event create_keyboard_event(const midi_key& key) const;
+		void handle_internal_key(const key_type key);
 
 	public:
-		device_manager(std::unique_ptr<input_api> input_api);
+		device_manager(const std::unique_ptr<input_api> input_api);
 
 		bool try_load_mapping(const fs::path& path);
 		bool try_load_profile(const fs::path& path);

@@ -2,12 +2,14 @@
 
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace midikeys
 {
 	enum key_type
 	{
 		NONE,
+		ESCAPE,
 
 		// - Win (Windows)
 		// - Command (Apple)
@@ -77,11 +79,28 @@ namespace midikeys
 		NUMERIC_6,
 		NUMERIC_7,
 		NUMERIC_8,
-		NUMERIC_9
+		NUMERIC_9,
+
+		// Internal (built-in functions)
+		BANK_SELECT_PREV,
+		BANK_SELECT_NEXT,
+		EXIT
 	};
+
+	inline bool is_internal_key(const key_type type)
+	{
+		static std::unordered_set<key_type> map{
+			key_type::BANK_SELECT_PREV,
+			key_type::BANK_SELECT_NEXT,
+			key_type::EXIT
+		};
+
+		return map.find(type) != map.end();
+	}
 
 	static key_type key_type_from_string(const std::string& str) {
 		static std::unordered_map<std::string, key_type> map{
+			{ "escape", key_type::ESCAPE },
 			{ "super", key_type::SUPER },
 			{ "shift", key_type::SHIFT },
 			{ "ctrl", key_type::CONTROL },
@@ -137,6 +156,9 @@ namespace midikeys
 			{ "6", key_type::NUMERIC_6 },
 			{ "7", key_type::NUMERIC_7 },
 			{ "8", key_type::NUMERIC_8 },
+			{ "bank_next", key_type::BANK_SELECT_NEXT },
+			{ "bank_prev", key_type::BANK_SELECT_PREV },
+			{ "exit", key_type::EXIT }
 		};
 
 		const auto it = map.find(str);
@@ -147,9 +169,4 @@ namespace midikeys
 
 		return it->second;
 	}
-
-	struct keyboard_event
-	{
-		mutable std::vector<key_type> key_types;
-	};
 }
