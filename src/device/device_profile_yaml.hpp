@@ -64,7 +64,7 @@ namespace YAML
 
 			for (const auto& it : node) {
 				if (it.IsSequence()) {
-					messages.emplace_back(midikeys::SYSEX, it.as<std::vector<uint8_t>>());
+					messages.push_back({midikeys::SYSEX, it.as<std::vector<uint8_t>>()});
 				}
 				else if (it.IsMap()) {
 					messages.push_back(it.as<midikeys::device_message>());

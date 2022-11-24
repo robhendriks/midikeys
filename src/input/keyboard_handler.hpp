@@ -17,6 +17,8 @@ namespace midikeys
 		{
 		}
 
+		virtual ~keyboard_handler() = default;
+
 		void push(const key_type key)
 		{
 			m_keys.push(key);

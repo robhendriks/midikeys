@@ -13,6 +13,8 @@ namespace midikeys {
     public:
         explicit midi_port(midi_port_descriptor descriptor);
 
+        virtual ~midi_port() = default;
+
         [[nodiscard]] size_t port_number() const;
 
         [[nodiscard]] std::string_view port_name() const;

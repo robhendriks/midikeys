@@ -10,7 +10,7 @@ namespace midikeys {
         const size_t n_ports = port.getPortCount();
 
         for (size_t i = 0; i < n_ports; i++) {
-            port_descriptors.emplace_back(i, port.getPortName(i));
+            port_descriptors.push_back({i, port.getPortName(i)});
         }
 
         return port_descriptors;

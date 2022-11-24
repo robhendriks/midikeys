@@ -6,7 +6,6 @@
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 #include <unordered_map>
-#include <ranges>
 
 namespace YAML
 {
@@ -96,16 +95,15 @@ namespace YAML
                 return;
             }
 
-            size_t i = 0;
-            for (const uint8_t midi_control : std::views::iota(midi_control_range_start, midi_control_range_end)) {
+            for (size_t i = 0; i < midi_control_range_size; ++i) {
                 midikeys::device_input_mapping input;
 
                 input.control_type = control_type;
                 input.midi_channel = midi_channel;
-                input.midi_control = midi_control;
+                input.midi_control = static_cast<uint8_t>(midi_control_range_start + i);
                 input.color_off = color + "_off";
                 input.color_on = color + "_on";
-                input.keys = { keyboard.at(i++) };
+                input.keys = { keyboard.at(i) };
 
                 inputs.push_back(std::move(input));
             }
