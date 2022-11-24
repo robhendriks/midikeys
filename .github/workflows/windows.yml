@@ -23,10 +23,13 @@ jobs:
       - name: Build
         run: cmake --build build --config ${{ matrix.build_type }} --parallel 10
 
+      - name: Move executable
+        run: mv .\build\${{ matrix.build_type }}\*.exe .\build
+
       - uses: actions/upload-artifact@v3
         with:
-          name: midikeys-windows-x64
+          name: windows-${{ matrix.architecture }}-${{ matrix.build_type }}
           path: |
-            build/${{ matrix.build_type }}/midikeys.exe
+            build/*.exe
             build/*/*.yml
           if-no-files-found: error
