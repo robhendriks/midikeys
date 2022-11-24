@@ -27,6 +27,6 @@ jobs:
         with:
           name: midikeys-windows-x64
           path: |
-            build/**/*.exe
+            build/${{ matrix.build_type }}/midikeys.exe
             build/*/*.yml
           if-no-files-found: error
