@@ -23,7 +23,7 @@ Utility that simulates keyboard input based on MIDI messages.
 
 | Developer | Application | Support |
 | --------- | ----------- | ------- |
-| Pioneer   | rekordbox   | 🟢 Full |
+| Pioneer   | rekordbox   | 🟠 Partial |
 
 > ℹ You can add support for any application using [mappings](#mappings).
 
