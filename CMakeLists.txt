@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
 project(midikeys)
 
@@ -27,7 +27,3 @@ add_custom_target(copy_resources ALL
         ${CMAKE_CURRENT_BINARY_DIR})
 
 add_dependencies(midikeys copy_resources)
-
-if (BUILD_PROBE)
-    add_subdirectory(probe)
-endif()
