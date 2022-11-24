@@ -9,7 +9,7 @@ Command-line utility that dynamically maps MIDI messages to keyboard events.
 
 ## Features
 
-- Cross-playform
+- Cross-platform
 - Configuration based (YAML) [device profiles](docs/device-profiles.md) & [application mappings](docs/application-mappings.md)
 
 ## Operating Systems
