@@ -1,20 +1,16 @@
 # midikeys
 
-Utility that simulates keyboard input based on MIDI messages.
-
-![Screenshot](docs/images/screenshot.jpg)
-
-> ⚠ Currently only supports keyboard with a European QWERTY layout.
-
-## Platforms
-
-- Windows
-- macOS
+Command-line utility that dynamically maps MIDI messages to keyboard events.
 
 ## Features
 
-- Dynamic device/application mapping
-- Great performance & minimal resource usage
+- Cross-playform
+- Custom device profiles & application mappings using YAML
+
+## Operating Systems
+
+- Windows
+- macOS
 
 ## Supported Devices
 
