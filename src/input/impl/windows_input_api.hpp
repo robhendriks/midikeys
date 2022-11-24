@@ -7,6 +7,40 @@
 
 namespace midikeys
 {
+	class windows_key_press
+	{
+		INPUT& m_input;
+		WORD m_vk;
+
+		void key_down()
+		{
+			spdlog::debug("[KEY_DOWN] {0:x}", m_vk);
+			m_input.ki.wVk = m_vk;
+			m_input.ki.dwFlags = 0;
+			SendInput(1, &m_input, sizeof(INPUT));
+		}
+
+		void key_up()
+		{
+			spdlog::debug("[KEY_UP] {0:x}", m_vk);
+			m_input.ki.wVk = m_vk;
+			m_input.ki.dwFlags = KEYEVENTF_KEYUP;
+			SendInput(1, &m_input, sizeof(INPUT));
+		}
+
+	public:
+		explicit windows_key_press(INPUT& input, WORD vk)
+			: m_input(input), m_vk(vk)
+		{
+			key_down();
+		}
+
+		void dispose()
+		{
+			key_up();
+		}
+	};
+
 	class windows_keyboard_handler : public keyboard_handler
 	{
 	public:
@@ -14,6 +48,7 @@ namespace midikeys
 		{
 			static std::unordered_map<key_type, WORD> map{
 				{ key_type::NONE, 0x00 },
+				{ key_type::ESCAPE, VK_ESCAPE },
 				{ key_type::SUPER, VK_LWIN },
 				{ key_type::SHIFT, VK_SHIFT },
 				{ key_type::CONTROL, VK_CONTROL },
@@ -80,27 +115,29 @@ namespace midikeys
 			return it->second;
 		}
 
-		void handle_event(const keyboard_event& evt) const override
+		void flush() override
 		{
-			INPUT ip;
-
-			ip.type = INPUT_KEYBOARD;
-			ip.ki.wScan = 0;
-			ip.ki.time = 0;
-			ip.ki.dwExtraInfo = 0;
-
-			// Press all keys
-			for (const auto& key : evt.key_types) {
-				ip.ki.wVk = get_virtual_key(key);
-				ip.ki.dwFlags = 0;
-				SendInput(1, &ip, sizeof(INPUT));
+			std::queue<key_type>& keys = this->keys();
+			if (keys.empty()) {
+				return;
 			}
 
-			// Release all keys
-			for (const auto& key : evt.key_types) {
-				ip.ki.wVk = get_virtual_key(key);
-				ip.ki.dwFlags = KEYEVENTF_KEYUP;
-				SendInput(1, &ip, sizeof(INPUT));
+
+			INPUT input;
+			input.type = INPUT_KEYBOARD;
+			input.ki.wScan = 0;
+			input.ki.time = 0;
+			input.ki.dwExtraInfo = 0;
+
+			std::vector<windows_key_press> key_presses;
+
+			while (!keys.empty()) {
+				key_presses.emplace_back(input, get_virtual_key(keys.front()));
+				keys.pop();
+			}
+
+			for (auto& key_press : key_presses) {
+				key_press.dispose();
 			}
 		}
 	};
