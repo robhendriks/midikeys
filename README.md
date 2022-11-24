@@ -1,8 +1,8 @@
 # midikeys
 
-<picture align="right">
+<picture>
   <source media="(prefers-color-scheme: dark)" srcset="./docs/images/logo-dark.svg">
-  <img alt="Logo" width="128" height="128" src="./docs/images/logo-light.svg">
+  <img alt="Logo" align="right" width="128" height="128" src="./docs/images/logo-light.svg">
 </picture>
 
 Command-line utility that dynamically maps MIDI messages to keyboard events.
