@@ -11,6 +11,11 @@ Utility that simulates keyboard input based on MIDI messages.
 - Windows
 - macOS (t.b.d)
 
+## Features
+
+- Dynamic device/application mapping
+- Great performance & minimal resource usage
+
 ## Supported Devices
 
 | Manufacturer | Device      | Support |
