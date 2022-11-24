@@ -30,7 +30,7 @@ namespace midikeys
 		device_state m_state;
 
 		void midi_update(const midi_device& device) const;
-		void input_update(const midi_key key);
+		void input_update(const midi_key key, const bool is_key_down);
 
 		void handle_internal_key(const key_type key);
 

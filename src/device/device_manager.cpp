@@ -40,12 +40,12 @@ namespace midikeys
 		}
 	}
 
-	void device_manager::input_update(const midi_key key)
+	void device_manager::input_update(const midi_key key, const bool is_key_down)
 	{
 		const auto input_it = m_mapping.inputs.find(key);
 
 		for (const auto input_key : input_it->second.keys) {
-			if (is_internal_key(input_key)) {
+			if (is_internal_key(input_key) && is_key_down) {
 				handle_internal_key(input_key);
 			}
 			else {
@@ -53,7 +53,7 @@ namespace midikeys
 			}
 		}
 
-		m_input_api->keyboard()->flush();
+		m_input_api->keyboard()->flush(is_key_down);
 	}
 
 	void device_manager::handle_internal_key(const key_type key)
@@ -108,18 +108,17 @@ namespace midikeys
 		const uint8_t control = message.at(1);
 		const uint8_t velocity = message.at(2);
 
-		const bool is_pressed = velocity > 0;
+		const bool is_key_down = velocity > 0;
 
 		const midi_key key = midi_key{ channel, control };
 		const auto input_state_it = m_state.input_states.find(key);
 
 		if (input_state_it != m_state.input_states.end()) {
-			m_state.input_states[key] = is_pressed;
+			m_state.input_states[key] = is_key_down;
 			midi_update(device);
 
-			if (is_pressed) {
-				input_update(key);
-			}
+			input_update(key, is_key_down);
+
 		}
 	}
 
