@@ -18,13 +18,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Run CMake
         run: cmake -S . -B build -G "Visual Studio 17 2022" -A ${{ matrix.architecture }}
+
       - name: Build
         run: cmake --build build --config ${{ matrix.build_type }} --parallel 10
+
       - uses: actions/upload-artifact@v3
         with:
           name: midikeys-windows-x64
           path: |
-            build/*.exe
+            build/${{ matrix.build_type }}/*.exe
             build/*/*.yml
+          if-no-files-found: error
