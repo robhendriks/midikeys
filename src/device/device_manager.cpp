@@ -40,17 +40,17 @@ namespace midikeys
         }
     }
 
-    std::vector<keyboard_event> device_manager::create_keyboard_events(const midi_key& key) const
+    keyboard_event device_manager::create_keyboard_event(const midi_key& key) const
     {
+        const keyboard_event evt;
+
         const auto input_it = m_mapping.inputs.find(key);
 
-        std::vector<keyboard_event> evts;
-
         for (const auto key : input_it->second.keys) {
-            evts.push_back({ key });
+            evt.key_types.push_back({ key });
         }
 
-        return evts;
+        return evt;
     }
 
     bool device_manager::try_load_mapping(const fs::path& path)
@@ -90,7 +90,7 @@ namespace midikeys
 
     void device_manager::handle_message(const midi_device& device, const midi_message& message)
     {
-        if (message.type() != message_type::NOTE_ON && message.type() != message_type::NOTE_OFF) {
+        if (message.type() != message_type::NOTE_ON && message.type() != message_type::NOTE_OFF && message.type() != message_type::CONTROL_CHANGE) {
             return;
         }
 
@@ -108,7 +108,7 @@ namespace midikeys
             midi_update(device);
 
             if (is_pressed) {
-                m_input_api->keyboard()->handle_events(create_keyboard_events(key));
+                m_input_api->keyboard()->handle_event(create_keyboard_event(key));
             }
         }
     }
