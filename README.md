@@ -1,9 +1,9 @@
-# midikeys
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./docs/images/logo-dark.svg">
   <img alt="Logo" width="128" height="128" src="./docs/images/logo-light.svg">
 </picture>
+
+# midikeys
 
 Command-line utility that dynamically maps MIDI messages to keyboard events.
 
