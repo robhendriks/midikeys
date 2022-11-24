@@ -81,6 +81,9 @@ namespace midikeys
 		NUMERIC_8,
 		NUMERIC_9,
 
+		// Symbols & misc.
+		SPACE,
+
 		// Internal (built-in functions)
 		BANK_SELECT_PREV,
 		BANK_SELECT_NEXT,
@@ -159,7 +162,8 @@ namespace midikeys
 			{ "9", key_type::NUMERIC_9 },
 			{ "bank_next", key_type::BANK_SELECT_NEXT },
 			{ "bank_prev", key_type::BANK_SELECT_PREV },
-			{ "exit", key_type::EXIT }
+			{ "exit", key_type::EXIT },
+			{ "space", key_type::SPACE }
 		};
 
 		const auto it = map.find(str);

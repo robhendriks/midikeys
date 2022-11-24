@@ -13,6 +13,26 @@ mapping:
       type: button
       midi:
         channel: 1
-        control: [11, 18]
+        control: [21, 28]
       keyboard: [a, s, d, f, g, h, j, k]
-      color: magenta
+      color: red
+
+  - button:
+      midi: [1, 11]
+      keyboard: [b]
+      color: orange
+
+  - button:
+      midi: [1, 18]
+      keyboard: [n]
+      color: orange
+
+  - button:
+      midi: [1, 14]
+      keyboard: [c]
+      color: green
+
+  - button:
+      midi: [1, 15]
+      keyboard: [space]
+      color: green

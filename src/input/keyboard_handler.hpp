@@ -24,7 +24,7 @@ namespace midikeys
 			m_keys.push(key);
 		}
 
-		virtual void flush() = 0;
+		virtual void flush(const bool is_key_down) = 0;
 
 		std::queue<key_type>& keys()
 		{
