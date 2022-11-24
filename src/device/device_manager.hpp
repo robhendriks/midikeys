@@ -12,36 +12,36 @@ namespace fs = std::filesystem;
 
 namespace midikeys
 {
-    struct device_state
-    {
-        midi_map<bool> input_states;
+	struct device_state
+	{
+		midi_map<bool> input_states;
 
-        void initialize(device_mapping& mapping);
-    };
+		void initialize(device_mapping& mapping);
+	};
 
-    class device_manager : public midi_listener
-    {
-        std::unique_ptr<input_api> m_input_api;
+	class device_manager : public midi_listener
+	{
+		std::unique_ptr<input_api> m_input_api;
 
-        device_mapping m_mapping;
-        device_profile m_profile;
-        device_state m_state;
+		device_mapping m_mapping;
+		device_profile m_profile;
+		device_state m_state;
 
-        void midi_update(const midi_device& device) const;
+		void midi_update(const midi_device& device) const;
 
-        std::vector<keyboard_event> create_keyboard_events(const midi_key& key) const;
+		keyboard_event create_keyboard_event(const midi_key& key) const;
 
-    public:
-        device_manager(std::unique_ptr<input_api> input_api);
+	public:
+		device_manager(std::unique_ptr<input_api> input_api);
 
-        bool try_load_mapping(const fs::path& path);
-        bool try_load_profile(const fs::path& path);
+		bool try_load_mapping(const fs::path& path);
+		bool try_load_profile(const fs::path& path);
 
-        void handle_open(const midi_device& device) override;
-        void handle_message(const midi_device& device, const midi_message& message) override;
-        void handle_close(const midi_device& device) override;
+		void handle_open(const midi_device& device) override;
+		void handle_message(const midi_device& device, const midi_message& message) override;
+		void handle_close(const midi_device& device) override;
 
-        const device_mapping& mapping() const;
-        const device_profile& profile() const;
-    };
+		const device_mapping& mapping() const;
+		const device_profile& profile() const;
+	};
 }

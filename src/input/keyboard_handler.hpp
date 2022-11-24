@@ -5,9 +5,9 @@
 
 namespace midikeys
 {
-    class keyboard_handler
-    {
-    public:
-        virtual void handle_events(const std::vector<keyboard_event>& evts) const = 0;
-    };
+	class keyboard_handler
+	{
+	public:
+		virtual void handle_event(const keyboard_event& evt) const = 0;
+	};
 }
