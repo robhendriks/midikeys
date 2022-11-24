@@ -9,7 +9,7 @@ Utility that simulates keyboard input based on MIDI messages.
 ## Platforms
 
 - Windows
-- macOS (t.b.d)
+- macOS
 
 ## Features
 
