@@ -12,8 +12,24 @@ namespace midikeys
 {
     class windows_keyboard_handler : public keyboard_handler
     {
+        void key_down(INPUT& input, const WORD& virtual_key)
+        {
+            input.ki.wVk = virtual_key;
+            input.ki.dwFlags = 0;
+
+            SendInput(1, &input, sizeof(INPUT));
+        }
+
+        void key_up(INPUT& input, const WORD& virtual_key)
+        {
+            input.ki.wVk = virtual_key;
+            input.ki.dwFlags = KEYEVENTF_KEYUP;
+
+            SendInput(1, &input, sizeof(INPUT));
+        }
+
     public:
-        static WORD get_virtual_key(const key_type type)
+        static WORD get_virtual_key(const key_type& type)
         {
             static std::unordered_map<key_type, WORD> map{
                 { key_type::NONE, 0x00 },
@@ -85,29 +101,13 @@ namespace midikeys
             return it->second;
         }
 
-        void key_down(INPUT& input, WORD virtual_key)
-        {
-            input.ki.wVk = virtual_key;
-            input.ki.dwFlags = 0;
-
-            SendInput(1, &input, sizeof(INPUT));
-        }
-
-        void key_up(INPUT& input, WORD virtual_key)
-        {
-            input.ki.wVk = virtual_key;
-            input.ki.dwFlags = KEYEVENTF_KEYUP;
-
-            SendInput(1, &input, sizeof(INPUT));
-        }
-
         void flush(const bool is_key_down) override
         {
             std::queue<key_type>& keys = this->keys();
+
             if (keys.empty()) {
                 return;
             }
-
 
             INPUT input;
             input.type = INPUT_KEYBOARD;
@@ -119,11 +119,9 @@ namespace midikeys
                 const WORD virtual_key = get_virtual_key(keys.front());
 
                 if (is_key_down) {
-                    spdlog::info("KEY_DOWN {0:x}", virtual_key);
                     key_down(input, virtual_key);
                 }
                 else {
-                    spdlog::info("KEY_UP {0:x}", virtual_key);
                     key_up(input, virtual_key);
                 }
 

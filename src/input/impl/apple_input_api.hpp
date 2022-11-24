@@ -10,41 +10,24 @@
 
 namespace midikeys
 {
-    class apple_keyboard_press
+    class apple_keyboard_handler : public keyboard_handler
     {
-        CGEventSourceRef m_source;
-        CGKeyCode m_key_code;
-
-        void key_down()
+        void key_down(CGEventSourceRef source, CGKeyCode virtual_key)
         {
-            CGEventRef key_down = CGEventCreateKeyboardEvent(m_source, m_key_code, true);
+            CGEventRef key_down = CGEventCreateKeyboardEvent(source, virtual_key, true);
             CGEventPost(kCGAnnotatedSessionEventTap, key_down);
+
             CFRelease(key_down);
         }
 
-        void key_up()
+        void key_up(CGEventSourceRef source, CGKeyCode virtual_key)
         {
-            CGEventRef key_up = CGEventCreateKeyboardEvent(m_source, m_key_code, false);
+            CGEventRef key_up = CGEventCreateKeyboardEvent(source, virtual_key, false);
             CGEventPost(kCGAnnotatedSessionEventTap, key_up);
+
             CFRelease(key_up);
         }
 
-    public:
-        apple_keyboard_press(CGEventSourceRef source, CGKeyCode key_code)
-            : m_source(source), m_key_code(key_code)
-        {
-            key_down();
-        }
-
-        void dispose()
-        {
-            key_up();
-        }
-    };
-
-
-    class apple_keyboard_handler : public keyboard_handler
-    {
     public:
         static CGKeyCode get_virtual_key(const key_type type)
         {
@@ -118,30 +101,29 @@ namespace midikeys
             return it->second;
         }
 
-        void flush() override
+        void flush(const bool is_key_down) override
         {
             std::queue<key_type>& keys = this->keys();
             if (keys.empty()) {
                 return;
             }
 
-            std::vector<apple_keyboard_press> key_presses;
-
             CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
 
             while (!keys.empty()) {
-                key_presses.push_back(apple_keyboard_press{ source, get_virtual_key(keys.front()) });
+                const CGKeyCode virtual_key = get_virtual_key(keys.front());
+
+                if (is_key_down) {
+                    key_down(source, virtual_key);
+                }
+                else {
+                    key_up(source, virtual_key);
+                }
 
                 keys.pop();
             }
 
-            for (auto& key_press : key_presses) {
-                key_press.dispose();
-            }
-
             CFRelease(source);
-
-            key_presses.clear();
         }
     };
 
