@@ -3,9 +3,7 @@ name: windows
 on:
   push:
     branches:
-      - main
       - release/*
-  pull_request:
   workflow_dispatch:
 
 jobs:
