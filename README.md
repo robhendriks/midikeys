@@ -34,37 +34,39 @@ Utility that simulates keyboard input based on MIDI messages.
 
 ## Usage
 
+### CLI
+
 **Global Arguments**
 
 | Argument    | Alias | Type    | Description             |
 | ----------- | ----- | ------- | ----------------------- |
 | `--verbose` | `-v`  | boolean | Enable extended logging |
 
-### List MIDI Ports
+#### List MIDI Ports
 
 ```shell
 midikeys --list
 ```
 
-### Verify Configuration
+#### Verify Configuration
 
 ```shell
 midikeys --verify <mapping> <device_profile>
 ```
 
-**Example**
+##### Example
 
 ```shell
 midikeys --verify rekordbox novation-launchpad-x
 ```
 
-### Run
+#### Run
 
 ```shell
 midikeys --input=<port> --output=<port> <mapping> <device_profile>
 ```
 
-**Example**
+##### Example
 
 ```shell
 midikeys --input=0 --output=0 rekordbox novation-launchpad-x
