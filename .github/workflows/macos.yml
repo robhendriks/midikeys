@@ -23,3 +23,11 @@ jobs:
 
       - name: Build
         run: cmake --build build --parallel 10
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: macos-xcode-${{ matrix.xcode }}
+          path: |
+            build/midikeys
+            build/*/*.yml
+          if-no-files-found: error
