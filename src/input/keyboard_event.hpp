@@ -156,6 +156,7 @@ namespace midikeys
 			{ "6", key_type::NUMERIC_6 },
 			{ "7", key_type::NUMERIC_7 },
 			{ "8", key_type::NUMERIC_8 },
+			{ "9", key_type::NUMERIC_9 },
 			{ "bank_next", key_type::BANK_SELECT_NEXT },
 			{ "bank_prev", key_type::BANK_SELECT_PREV },
 			{ "exit", key_type::EXIT }

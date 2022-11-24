@@ -14,7 +14,7 @@ Utility that simulates keyboard input based on MIDI messages.
 ## Supported Devices
 
 | Manufacturer | Device      | Support |
-|--------------|-------------|---------|
+| ------------ | ----------- | ------- |
 | Novation     | Launchpad X | 🟢 Full |
 
 > ℹ You can add support for any device using [device profiles](#device-profiles).
@@ -32,7 +32,7 @@ Utility that simulates keyboard input based on MIDI messages.
 **Global Arguments**
 
 | Argument    | Alias | Type    | Description             |
-|-------------|-------|---------|-------------------------|
+| ----------- | ----- | ------- | ----------------------- |
 | `--verbose` | `-v`  | boolean | Enable extended logging |
 
 ### List MIDI Ports
@@ -48,6 +48,7 @@ midikeys --verify <mapping> <device_profile>
 ```
 
 **Example**
+
 ```shell
 midikeys --verify rekordbox novation-launchpad-x
 ```
@@ -93,14 +94,82 @@ mapping:
       color: red
 ```
 
-### Key Table
+### Key Table (case-sensitive)
 
-| ID            | Key         |
-|---------------|-------------|
-| `arrow_left`  | Arrow Left  |
-| `arrow_right` | Arrow Right |
-| `arrow_up`    | Arrow Up    |
-| `arrow_down`  | Arrow Down  |
+#### Internal
+
+| Name        | Description          |
+| ----------- | -------------------- |
+| `bank_next` | Select next bank     |
+| `bank_prev` | Select previous bank |
+| `exit`      | Exit application     |
+
+#### OS Specific
+
+| Name    | Windows Key    | Apple Key          |
+| ------- | -------------- | ------------------ |
+| `super` | <kbd>Win</kbd> | <kbd>Command</kbd> |
+| `menu`  | <kbd>Alt</kbd> | <kbd>Option</kbd>  |
+
+#### Generic
+
+| Name          | Key                |
+| ------------- | ------------------ |
+| `escape`      | <kbd>Escape</kbd>  |
+| `shift`       | <kbd>Shift</kbd>   |
+| `ctrl`        | <kbd>Control</kbd> |
+| `f1`          | <kbd>F1</kbd>      |
+| `f2`          | <kbd>F2</kbd>      |
+| `f3`          | <kbd>F3</kbd>      |
+| `f4`          | <kbd>F4</kbd>      |
+| `f5`          | <kbd>F5</kbd>      |
+| `f6`          | <kbd>F6</kbd>      |
+| `f7`          | <kbd>F7</kbd>      |
+| `f8`          | <kbd>F8</kbd>      |
+| `f9`          | <kbd>F9</kbd>      |
+| `f10`         | <kbd>F10</kbd>     |
+| `f11`         | <kbd>F11</kbd>     |
+| `f12`         | <kbd>F12</kbd>     |
+| `arrow_left`  | <kbd>&larr;</kbd>  |
+| `arrow_right` | <kbd>&rarr;</kbd>  |
+| `arrow_up`    | <kbd>&uarr;</kbd>  |
+| `arrow_down`  | <kbd>&darr;</kbd>  |
+| `a`           | <kbd>A</kbd>       |
+| `b`           | <kbd>B</kbd>       |
+| `c`           | <kbd>C</kbd>       |
+| `d`           | <kbd>D</kbd>       |
+| `e`           | <kbd>E</kbd>       |
+| `f`           | <kbd>F</kbd>       |
+| `g`           | <kbd>G</kbd>       |
+| `h`           | <kbd>H</kbd>       |
+| `i`           | <kbd>I</kbd>       |
+| `j`           | <kbd>J</kbd>       |
+| `k`           | <kbd>K</kbd>       |
+| `l`           | <kbd>L</kbd>       |
+| `m`           | <kbd>M</kbd>       |
+| `n`           | <kbd>N</kbd>       |
+| `o`           | <kbd>O</kbd>       |
+| `p`           | <kbd>P</kbd>       |
+| `q`           | <kbd>Q</kbd>       |
+| `r`           | <kbd>R</kbd>       |
+| `s`           | <kbd>S</kbd>       |
+| `t`           | <kbd>T</kbd>       |
+| `u`           | <kbd>U</kbd>       |
+| `v`           | <kbd>V</kbd>       |
+| `w`           | <kbd>W</kbd>       |
+| `x`           | <kbd>X</kbd>       |
+| `y`           | <kbd>Y</kbd>       |
+| `z`           | <kbd>Z</kbd>       |
+| `0`           | <kbd>0</kbd>       |
+| `1`           | <kbd>1</kbd>       |
+| `2`           | <kbd>2</kbd>       |
+| `3`           | <kbd>3</kbd>       |
+| `4`           | <kbd>4</kbd>       |
+| `5`           | <kbd>5</kbd>       |
+| `6`           | <kbd>6</kbd>       |
+| `7`           | <kbd>7</kbd>       |
+| `8`           | <kbd>8</kbd>       |
+| `9`           | <kbd>9</kbd>       |
 
 ## Device Profiles
 
