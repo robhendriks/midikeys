@@ -1,6 +1,6 @@
 # midikeys
 
-[![Build](https://github.com/robhendriks/midikeys/actions/workflows/windows.yml/badge.svg)](https://github.com/robhendriks/midikeys/actions/workflows/windows.yml)
+[![windows](https://github.com/robhendriks/midikeys/actions/workflows/windows.yml/badge.svg)](https://github.com/robhendriks/midikeys/actions/workflows/windows.yml)
 [![macos](https://github.com/robhendriks/midikeys/actions/workflows/macos.yml/badge.svg)](https://github.com/robhendriks/midikeys/actions/workflows/macos.yml)
 
 Command-line utility that dynamically maps MIDI messages to keyboard events.
