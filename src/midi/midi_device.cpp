@@ -12,7 +12,7 @@ namespace midikeys
     {
     }
 
-    std::unique_ptr<midi_connection> midi_device::open()
+    void midi_device::open()
     {
         if (!m_input->open()) {
             throw std::runtime_error(fmt::format("Unable to open MIDI input on port {}.", m_input->port_number()));
@@ -26,16 +26,16 @@ namespace midikeys
 
         spdlog::debug("Using MIDI output on port {} '{}'", m_output->port_number(), m_output->port_name());
 
-        auto worker = std::make_unique<midi_connection>(*this);
+        //auto worker = std::make_unique<midi_connection>(*this);
 
-        if (auto listener = m_listener.lock()) {
-            listener->handle_open(*this);
-        }
-        else {
-            spdlog::warn("No listener defined.");
-        }
+        //if (auto listener = m_listener.lock()) {
+        //    listener->handle_open(*this);
+        //}
+        //else {
+        //    spdlog::warn("No listener defined.");
+        //}
 
-        return worker;
+        //return worker;
     }
 
     void midi_device::close()

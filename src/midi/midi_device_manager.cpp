@@ -8,7 +8,7 @@
 namespace midikeys
 {
     midi_device_manager::midi_device_manager()
-        : m_api(nullptr), m_devices(), m_connections()
+        : m_api(nullptr), m_devices()
     {
     }
 
@@ -56,16 +56,12 @@ namespace midikeys
     void midi_device_manager::open_device_connections()
     {
         for (const auto& device_it : m_devices) {
-            m_connections.push_back(device_it->open());
+            device_it->open();
         }
     }
 
     void midi_device_manager::close_device_connections()
     {
-        for (const auto& connection_it : m_connections) {
-            connection_it->dispose();
-        }
-
         for (const auto& device_it : m_devices) {
             device_it->close();
         }

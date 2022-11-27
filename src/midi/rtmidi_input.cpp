@@ -1,4 +1,5 @@
 #include "rtmidi_input.hpp"
+#include <spdlog/spdlog.h>
 
 namespace midikeys {
     rtmidi_input::rtmidi_input(midi_port_descriptor descriptor)
@@ -12,6 +13,11 @@ namespace midikeys {
         m_in.setErrorCallback([](RtMidiError::Type type, const std::string &errorText, void *userData) {
             //
         });
+
+        m_in.setCallback([](double timeStamp, std::vector<unsigned char>* message, void* userData)
+            {
+                spdlog::info("#{} -> {}", static_cast<rtmidi_input*>(userData)->port_name(), message->size());
+            }, this);
 
         m_in.ignoreTypes(false, true, true);
         m_in.openPort(port_number());

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "midi_connection.hpp"
 #include "midi_listener.hpp"
 #include "midi_input.hpp"
 #include "midi_output.hpp"
@@ -17,7 +16,7 @@ namespace midikeys {
     public:
         midi_device(std::string name, std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output);
 
-        std::unique_ptr<midi_connection> open();
+        void open();
 
         void close();
 

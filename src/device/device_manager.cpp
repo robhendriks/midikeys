@@ -30,7 +30,6 @@ namespace midikeys
 
 			const uint8_t color_midi_value = m_profile.color_map.get_color_or_default(color, 0);
 
-
 			const auto message = midi_message::make_control_change(
 				input_it->second.midi_channel,
 				input_it->second.midi_control,
