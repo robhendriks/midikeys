@@ -57,7 +57,10 @@ namespace midikeys
     bool app::try_initialize_midi()
     {
         try {
-            m_midi_device_manager.initialize();
+            m_midi_device_manager.create_api();
+            m_midi_device_manager.create_devices(m_configuration_manager.config()->devices);
+
+            return true;
         }
         catch (const std::exception& e) {
             spdlog::error("Unable to initialize MIDI: {}", e.what());

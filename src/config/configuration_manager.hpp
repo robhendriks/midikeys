@@ -10,6 +10,9 @@ namespace midikeys
     class configuration_manager
     {
         std::unique_ptr<configuration> m_config;
+
+        static void validate(const configuration& config);
+
     public:
         configuration_manager();
 

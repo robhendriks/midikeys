@@ -1,8 +1,8 @@
 devices:
-  - launchpad:
+  - novation_lpx:
     input: 1
     output: 2
 
-  - midi_fighter:
+  - djtechtools_mft:
     input: 1
     output: 2
