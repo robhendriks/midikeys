@@ -14,7 +14,8 @@ namespace midikeys {
         [[nodiscard]] virtual std::unique_ptr<midi_device> make_device(
             const std::string& name,
             const midi_port_descriptor& input_port_descriptor,
-            const midi_port_descriptor& output_port_descriptor) const = 0;
+            const midi_port_descriptor& output_port_descriptor,
+            midi_listener* listener) const = 0;
 
         midi_api() = default;
 

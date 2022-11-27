@@ -2,7 +2,9 @@ devices:
   - name: Novation Launchpad X
     input: 1
     output: 2
+    profile: novation-launchpad-x
 
   - name: DJ TechTools Midi Fighter Twister
     input: 2
     output: 3
+    profile: default

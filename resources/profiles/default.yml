@@ -1,0 +1,7 @@
+profile:
+  messages:
+    open: []
+    close: []
+
+  colors:
+    white: [0, 127]

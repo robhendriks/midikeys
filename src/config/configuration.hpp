@@ -3,15 +3,10 @@
 #include <vector>
 #include <iostream>
 
+#include "device_configuration.hpp"
+
 namespace midikeys
 {
-    struct device_configuration
-    {
-        std::string name;
-        size_t input;
-        size_t output;
-    };
-
     struct configuration
     {
         std::vector<device_configuration> devices;

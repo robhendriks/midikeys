@@ -1,5 +1,5 @@
 #include "configuration_manager.hpp"
-#include "configuration_yaml.hpp"
+#include "yaml/configuration_yaml.hpp"
 #include "configuration_validator.hpp"
 #include <yaml-cpp/yaml.h>
 #include <spdlog/spdlog.h>

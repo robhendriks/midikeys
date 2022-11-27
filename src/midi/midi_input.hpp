@@ -9,7 +9,5 @@ namespace midikeys {
         explicit midi_input(midi_port_descriptor descriptor);
 
         virtual ~midi_input() = default;
-
-        virtual void get_message(midi_message &message) const = 0;
     };
 }

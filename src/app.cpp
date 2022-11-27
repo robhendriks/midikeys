@@ -1,6 +1,5 @@
 #include "app.hpp"
 #include "midi/midi_api_factory.hpp"
-#include "device/device_profile.hpp"
 #include "input/input_api_factory.hpp"
 #include <spdlog/spdlog.h>
 

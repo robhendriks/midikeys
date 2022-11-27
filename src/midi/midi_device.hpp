@@ -11,10 +11,10 @@ namespace midikeys {
         std::string m_name;
         std::unique_ptr<midi_input> m_input;
         std::unique_ptr<midi_output> m_output;
-        std::weak_ptr<midi_listener> m_listener;
+        midi_listener* m_listener;
 
     public:
-        midi_device(std::string name, std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output);
+        midi_device(std::string name, std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output, midi_listener* listener);
 
         void open();
 
@@ -28,9 +28,7 @@ namespace midikeys {
 
         const midi_output& output() const;
 
-        std::weak_ptr<midi_listener> listener() const;
-
-        void set_listener(std::weak_ptr<midi_listener> listener);
+        midi_listener* listener() const;
 
         const std::string& name() const;
     };

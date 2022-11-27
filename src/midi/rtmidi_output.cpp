@@ -3,7 +3,7 @@
 
 namespace midikeys {
     rtmidi_output::rtmidi_output(midi_port_descriptor descriptor)
-            : m_out(), midi_output(std::move(descriptor)) {
+        : m_out(), midi_output(std::move(descriptor)) {
     }
 
     bool rtmidi_output::open() {
@@ -22,7 +22,7 @@ namespace midikeys {
         }
     }
 
-    void rtmidi_output::send_message(const midi_message &message) const {
+    void rtmidi_output::send_message(const midi_message& message) const {
         if (m_out.isPortOpen()) {
             m_out.sendMessage(&message.bytes());
         }

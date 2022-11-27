@@ -29,11 +29,14 @@ namespace midikeys {
     std::unique_ptr<midi_device> rtmidi_api::make_device(
         const std::string& name,
         const midikeys::midi_port_descriptor& input_port_descriptor,
-        const midikeys::midi_port_descriptor& output_port_descriptor) const {
+        const midikeys::midi_port_descriptor& output_port_descriptor,
+        midi_listener* listener
+    ) const {
         return std::make_unique<midi_device>(
             name,
             std::make_unique<rtmidi_input>(input_port_descriptor),
-            std::make_unique<rtmidi_output>(output_port_descriptor));
+            std::make_unique<rtmidi_output>(output_port_descriptor),
+            listener);
     }
 
     std::string rtmidi_api::name() const

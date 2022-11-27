@@ -12,7 +12,5 @@ namespace midikeys {
         bool open() override;
 
         void close() override;
-
-        void get_message(midi_message &message) const override;
     };
 }

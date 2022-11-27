@@ -49,7 +49,8 @@ namespace midikeys
                 m_api->make_device(
                     device_cfg.name,
                     input_port.value(),
-                    output_port.value()));
+                    output_port.value(),
+                    this));
         }
     }
 
@@ -65,5 +66,28 @@ namespace midikeys
         for (const auto& device_it : m_devices) {
             device_it->close();
         }
+    }
+
+    void midi_device_manager::handle_open(const midi_device& device)
+    {
+        spdlog::info("[CONN_OPEN] {}", device.name());
+
+
+        //device.profile().
+    }
+
+    void midi_device_manager::handle_close(const midi_device& device)
+    {
+        spdlog::info("[CONN_CLOSE] {}", device.name());
+    }
+
+    void midi_device_manager::handle_message(const midikeys::midi_device& device, const midi_message& message)
+    {
+        spdlog::info("[MSG] {}", device.name());
+    }
+
+    void midi_device_manager::handle_error(const midi_device& device, const std::string& error_message)
+    {
+        spdlog::error("Error: {}", error_message);
     }
 }
