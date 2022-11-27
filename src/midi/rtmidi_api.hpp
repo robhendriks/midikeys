@@ -12,5 +12,7 @@ namespace midikeys {
 
         std::unique_ptr<midi_device> make_device(const midikeys::midi_port_descriptor& input_port_descriptor,
             const midikeys::midi_port_descriptor& output_port_descriptor) const override;
+
+        std::string name() const override;
     };
 }

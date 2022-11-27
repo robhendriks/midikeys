@@ -18,5 +18,7 @@ namespace midikeys {
         midi_api() = default;
 
         virtual ~midi_api() = default;
+
+        virtual std::string name() const = 0;
     };
 }

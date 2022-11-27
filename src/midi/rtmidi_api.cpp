@@ -10,7 +10,7 @@ namespace midikeys {
         const size_t n_ports = port.getPortCount();
 
         for (size_t i = 0; i < n_ports; i++) {
-            port_descriptors.push_back({i, port.getPortName(i)});
+            port_descriptors.push_back({ i, port.getPortName(i) });
         }
 
         return port_descriptors;
@@ -32,5 +32,10 @@ namespace midikeys {
         return std::make_unique<midi_device>(
             std::make_unique<rtmidi_input>(input_port_descriptor),
             std::make_unique<rtmidi_output>(output_port_descriptor));
+    }
+
+    std::string rtmidi_api::name() const
+    {
+        return "RtMidi";
     }
 }

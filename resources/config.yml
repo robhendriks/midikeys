@@ -1,0 +1,8 @@
+devices:
+  - launchpad:
+    input: 1
+    output: 2
+
+  - midi_fighter:
+    input: 1
+    output: 2
