@@ -13,13 +13,17 @@ namespace YAML
     {
         static bool decode(const Node& node, device_configuration& device_cfg)
         {
+            const Node& name_node = node["name"];
             const Node& input_node = node["input"];
             const Node& output_node = node["output"];
 
-            if (!input_node.IsScalar() || !output_node.IsScalar()) {
+            if (!name_node.IsScalar() ||
+                !input_node.IsScalar() ||
+                !output_node.IsScalar()) {
                 return false;
             }
 
+            device_cfg.name = name_node.as<std::string>();
             device_cfg.input = input_node.as<size_t>();
             device_cfg.output = output_node.as<size_t>();
 

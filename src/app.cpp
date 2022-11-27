@@ -49,7 +49,8 @@ namespace midikeys
             return true;
         }
         catch (const std::exception& e) {
-            spdlog::error("Unable to load configuration: {}", e.what());
+            spdlog::error("Unable to load configuration");
+            spdlog::error(e.what());
             return false;
         }
     }
@@ -63,7 +64,8 @@ namespace midikeys
             return true;
         }
         catch (const std::exception& e) {
-            spdlog::error("Unable to initialize MIDI: {}", e.what());
+            spdlog::error("Unable to initialize MIDI");
+            spdlog::error(e.what());
             return false;
         }
     }

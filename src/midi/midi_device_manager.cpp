@@ -1,5 +1,6 @@
 #include "midi_device_manager.hpp"
 #include "midi_api_factory.hpp"
+#include "../config/configuration_util.hpp"
 
 #include <stdexcept>
 #include <spdlog/spdlog.h>
@@ -35,11 +36,13 @@ namespace midikeys
             const auto output_port = ports.find_output(device_cfg.output);
 
             if (!input_port.has_value()) {
-                throw std::runtime_error("Boom boom boom.");
+                throw std::runtime_error(configuration_util::make_error_message(
+                    device_cfg, "invalid MIDI in port {}", device_cfg.input));
             }
 
             if (!output_port.has_value()) {
-                throw std::runtime_error("Everybody say: wehooo wehoo");
+                throw std::runtime_error(configuration_util::make_error_message(
+                    device_cfg, "invalid MIDI out port {}", device_cfg.output));
             }
 
             m_devices.push_back(

@@ -1,8 +1,8 @@
 devices:
-  - novation_lpx:
+  - name: lpx
     input: 1
     output: 2
 
-  - djtechtools_mft:
+  - name: mft
     input: 1
     output: 2
