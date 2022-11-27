@@ -11,6 +11,7 @@ namespace midikeys
     {
         std::unique_ptr<midi_api> m_api;
         std::vector<std::unique_ptr<midi_device>> m_devices;
+        std::vector<std::unique_ptr<midi_connection>> m_connections;
 
     public:
         midi_device_manager();
@@ -18,5 +19,9 @@ namespace midikeys
         void create_api();
 
         void create_devices(const std::vector<device_configuration>& device_cfgs);
+
+        void open_device_connections();
+
+        void close_device_connections();
     };
 }

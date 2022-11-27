@@ -1,12 +1,11 @@
 mapping:
   # CC Channel 1, Control 93-94
-  - range:
-      type: button
-      midi:
-        channel: 1
-        control: [93, 94]
-      keyboard: [bank_prev, bank_next]
-      color: red
+  - type: button
+    midi:
+      channel: 1
+      control: [93, 94]
+    keyboard: [bank_prev, bank_next]
+    color: red
 
   # CC Channel 1, Control 21-28
   - range:

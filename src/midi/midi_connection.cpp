@@ -1,4 +1,4 @@
-#include "midi_worker.hpp"
+#include "midi_connection.hpp"
 #include "midi_device.hpp"
 #include "midi_message.hpp"
 #include <spdlog/spdlog.h>
@@ -6,19 +6,19 @@
 
 namespace midikeys
 {
-    midi_worker::midi_worker(std::reference_wrapper<midi_device> device)
+    midi_connection::midi_connection(std::reference_wrapper<midi_device> device)
         : m_device(device), 
-        m_thread(std::thread(&midi_worker::do_work, this))
+        m_thread(std::thread(&midi_connection::do_work, this))
     {
         spdlog::debug("Created MIDI worker thread");
     }
 
-    midi_worker::~midi_worker()
+    midi_connection::~midi_connection()
     {
         dispose();
     }
 
-    void midi_worker::do_work()
+    void midi_connection::do_work()
     {
         spdlog::debug("Started listening to incoming MIDI messages");
 
@@ -43,7 +43,7 @@ namespace midikeys
         spdlog::debug("Stopped listening to incoming MIDI messages");
     }
 
-    void midi_worker::dispose()
+    void midi_connection::dispose()
     {        
         if (m_thread.joinable())
         {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "midi_worker.hpp"
+#include "midi_connection.hpp"
 #include "midi_listener.hpp"
 #include "midi_input.hpp"
 #include "midi_output.hpp"
@@ -9,14 +9,15 @@
 namespace midikeys {
 
     class midi_device {
+        std::string m_name;
         std::unique_ptr<midi_input> m_input;
         std::unique_ptr<midi_output> m_output;
         std::weak_ptr<midi_listener> m_listener;
 
     public:
-        midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output);
+        midi_device(std::string name, std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output);
 
-        std::shared_ptr<midi_worker> open();
+        std::unique_ptr<midi_connection> open();
 
         void close();
 
@@ -31,5 +32,7 @@ namespace midikeys {
         std::weak_ptr<midi_listener> listener() const;
 
         void set_listener(std::weak_ptr<midi_listener> listener);
+
+        const std::string& name() const;
     };
 }

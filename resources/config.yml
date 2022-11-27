@@ -1,8 +1,8 @@
 devices:
-  - name: lpx
+  - name: Novation Launchpad X
     input: 1
     output: 2
 
-  - name: mft
-    input: 1
-    output: 2
+  - name: DJ TechTools Midi Fighter Twister
+    input: 2
+    output: 3

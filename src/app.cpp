@@ -70,6 +70,16 @@ namespace midikeys
         }
     }
 
+    void app::run_loop()
+    {
+        m_midi_device_manager.open_device_connections();
+
+        char c;
+        std::cin.get(c);
+
+        m_midi_device_manager.close_device_connections();
+    }
+
     int app::run(const char* argv[])
     {
         const auto cmdl = argh::parser(argv);
@@ -80,6 +90,10 @@ namespace midikeys
             !try_initialize_midi()) {
             return 1;
         }
+
+        run_loop();
+
+        // TODO
 
         return 0;
     }

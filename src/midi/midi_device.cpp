@@ -4,14 +4,15 @@
 
 namespace midikeys
 {
-    midi_device::midi_device(std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output)
-        : m_input(std::move(input)),
+    midi_device::midi_device(std::string name, std::unique_ptr<midi_input> input, std::unique_ptr<midi_output> output)
+        : m_name(std::move(name)),
+        m_input(std::move(input)),
         m_output(std::move(output)),
         m_listener(std::weak_ptr<midi_listener>())
     {
     }
 
-    std::shared_ptr<midi_worker> midi_device::open()
+    std::unique_ptr<midi_connection> midi_device::open()
     {
         if (!m_input->open()) {
             throw std::runtime_error(fmt::format("Unable to open MIDI input on port {}.", m_input->port_number()));
@@ -25,7 +26,7 @@ namespace midikeys
 
         spdlog::debug("Using MIDI output on port {} '{}'", m_output->port_number(), m_output->port_name());
 
-        auto worker = std::make_shared<midi_worker>(*this);
+        auto worker = std::make_unique<midi_connection>(*this);
 
         if (auto listener = m_listener.lock()) {
             listener->handle_open(*this);
@@ -75,5 +76,10 @@ namespace midikeys
 
     void midi_device::set_listener(std::weak_ptr<midi_listener> listener) {
         m_listener = std::move(listener);
+    }
+
+    const std::string& midi_device::name() const
+    {
+        return m_name;
     }
 }

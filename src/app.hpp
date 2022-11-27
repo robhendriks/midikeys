@@ -28,6 +28,8 @@ namespace midikeys {
         bool try_load_config(const fs::path& config_path);
 
         bool try_initialize_midi();
+
+        void run_loop();
     public:
         app(app_paths paths);
 
